@@ -1,0 +1,43 @@
+$mobile: 768px
+$visible: 1232px
+
+$point: #4680C1
+$deepPoint: #396EAA
+$iconPoint: #005cff
+$blurPoint: #849EBC
+$brightPoint: #DDE9FD
+$onClick: #173353
+$background: #E5E5E5
+$white: #ffffff
+$black: #000000
+$border: solid 1px #707070
+$borderColor:  #707070
+$error: #ffe7e6
+$errorPoint: #db4b46
+$success: #E8F0FE
+
+@mixin desktop
+    @media screen and (min-width: #{$mobile})
+        @content
+
+html, body
+    color: $black
+    font-size: 14px
+    scroll-behavior: smooth
+    @include desktop
+        font-size: 16px
+    #root
+        z-index: -999
+        height: 100vh
+        display: flex
+        flex-direction: column
+        //background-color: $background
+        //background-image: url("../assets/images/pattern.png")
+    .layout
+        display: flex
+        height: 100%
+        width: 100%
+        flex-direction: column
+    .basic_layout
+        main
+            flex: 1
