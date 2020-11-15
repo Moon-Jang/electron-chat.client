@@ -1,18 +1,35 @@
-import React from 'react';
+import React, { createContext, useState } from "react"
 import { Route, Switch } from "react-router-dom"
+import Alert from "./common/Alert"
 import Login from "./login/Login"
 import Signup from "./signup/Signup"
 
-const router = () => {
+export const AlertContext = createContext(null)
+const Router = () => {
+    const [alertVisible, setAlertVisible] = useState(false)
+    const [alertDescription, setAlertDescription] = useState("")
+    const alertBind = {
+        visible: alertVisible,
+        setVisible: setAlertVisible,
+        description: alertDescription,
+    }
     return (
         <>
-            <Switch>
-                <Route exact path="/" component={Login} />
-                <Route exact path="/signup" component={Signup} />
-                {/* <Route path="/" component={Error} /> */}
-            </Switch>
+            <AlertContext.Provider
+                value={{
+                    alertVisible,
+                    setVisible: setAlertVisible,
+                    setDescription: setAlertDescription,
+                }}>
+                <Switch>
+                    <Route exact path="/" component={Login} />
+                    <Route exact path="/signup" component={Signup} />
+                    {/* <Route path="/" component={Error} /> */}
+                </Switch>
+                <Alert {...alertBind} />
+            </AlertContext.Provider>
         </>
     )
 }
 
-export default router
+export default Router

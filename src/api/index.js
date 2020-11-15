@@ -1,2 +1,3 @@
 import API_login from "./auth/login"
-export { API_login }
+import API_confirmIdDuplication from "./common/confirmIdDuplication"
+export { API_login, API_confirmIdDuplication }

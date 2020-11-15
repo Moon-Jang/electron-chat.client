@@ -1,5 +1,5 @@
 import { Button, CircularProgress, TextField } from "@material-ui/core"
-import React from "react"
+import React, { useContext } from "react"
 import { useState } from "react"
 import { useHistory } from "react-router-dom"
 import { API_login } from "../../api"
@@ -8,9 +8,11 @@ import { happenApiError } from "../../util"
 import logo from "../../assets/logo/logo.svg"
 import "../../styles/login.sass"
 import "../../styles/App.css"
+import { AlertContext } from "../router"
 const Login = () => {
     const history = useHistory()
     const [isLogin, setIsLogin] = useState(false)
+    const alertContext = useContext(AlertContext)
     const [loginData, setLoginData] = useState({
         id: "",
         password: "",
@@ -25,7 +27,7 @@ const Login = () => {
     const login = async () => {
         setIsLogin(true)
         const response = await API_login({ id, password })
-        if (happenApiError(response, null, true)) {
+        if (happenApiError(response, alertContext, null, true)) {
             setIsLogin(false)
             return
         }
@@ -33,14 +35,14 @@ const Login = () => {
     }
     return (
         <BasicLayout name={"로그인"}>
-            <div class="login_page">
-                <div class="logo_wrap">
+            <div className="login_page">
+                <div className="logo_wrap">
                     <img src={logo} className={"App-logo"} alt={"logo"} />
                 </div>
-                <div class="main_contents">
-                    <div class="white_space" />
-                    <div class="login_form">
-                        <div class="input_wrap">
+                <div className="main_contents">
+                    <div className="white_space" />
+                    <div className="login_form">
+                        <div className="input_wrap">
                             <TextField
                                 id="id"
                                 name="id"
@@ -59,7 +61,7 @@ const Login = () => {
                                 onChange={handleChange}
                             />
                         </div>
-                        <div class="button_wrap">
+                        <div className="button_wrap">
                             <Button
                                 id="signupButton"
                                 variant="contained"
@@ -79,9 +81,9 @@ const Login = () => {
                             </Button>
                         </div>
                     </div>
-                    <div class="white_space" />
+                    <div className="white_space" />
                 </div>
-                <div class="white_space" />
+                <div className="white_space" />
             </div>
         </BasicLayout>
     )
