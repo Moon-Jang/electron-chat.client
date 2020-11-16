@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useHistory } from "react-router-dom"
 import { API_login } from "../../api"
 import BasicLayout from "../../layout/BasicLayout"
-import { happenApiError } from "../../util"
+import { alertDialog, happenApiError } from "../../util"
 import { AlertContext } from "../router"
 import API from "../../api/API"
 import jwt from "jsonwebtoken"
@@ -28,17 +28,25 @@ const Login = () => {
     }
     const moveToSignup = () => history.push("/signup")
     const login = async () => {
-        // setIsLogin(true)
-        // const response = await API_login({ id, password })
-        // if (happenApiError(response, alertContext, null, true)) {
-        //     setIsLogin(false)
-        //     return
-        // }
-        // const decoded = jwt.decode(response.data.token)
-        // if (typeof decoded !== "string") {
-        //     localStorage.jwt = response.data.token
-        //     API.defaults.headers["Authorization"] = `Bearer ${localStorage.jwt}`
-        // }
+        if (!id) {
+            alertDialog(alertContext, "아이디를 입력해주세요.")
+            return
+        }
+        if (!password) {
+            alertDialog(alertContext, "비밀번호를 입력해주세요.")
+            return
+        }
+        setIsLogin(true)
+        const response = await API_login({ id, password })
+        if (happenApiError(response, alertContext, null, true)) {
+            setIsLogin(false)
+            return
+        }
+        const decoded = jwt.decode(response.data.token)
+        if (typeof decoded !== "string") {
+            localStorage.jwt = response.data.token
+            API.defaults.headers["Authorization"] = `Bearer ${localStorage.jwt}`
+        }
         history.push("/main")
     }
     return (

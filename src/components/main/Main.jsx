@@ -1,14 +1,12 @@
-import React, { useContext } from "react"
-import { useHistory } from "react-router-dom"
+import React from "react"
 import BasicLayout from "../../layout/BasicLayout"
 import "../../styles/main.sass"
-import { AlertContext } from "../router"
 import jwt from "jsonwebtoken"
 //import { alertDialog } from "../../util"
 
 const Main = () => {
-    const history = useHistory()
-    const alertContext = useContext(AlertContext)
+    // const history = useHistory()
+    // const alertContext = useContext(AlertContext)
     const test = jwt.decode(localStorage.jwt)
     console.log(test)
     return (
