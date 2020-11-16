@@ -19,8 +19,8 @@ const validateList = {
     id: (value) => value.match(/^[a-zA-Z0-9]{4,20}$/i),
     email: (value) => value.match(/^[\w-+.]+@([\w-]+\.)+[\w-]{2,}$/g),
     emailCheck: (value) => value.match(/^[0-9a-zA-Z]{8}/i),
-    password: (value) => value.match(/^[A-Za-z0-9+]{8,128}$/i),
-    passwordCheck: (value) => value.match(/^[A-Za-z0-9+]{8,128}$/i),
+    password: (value) => value.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/i),
+    passwordCheck: (value) => value.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/i),
     name: (value) => value.match(/^[가-힣]{2,}|[a-zA-Z]{2,}\s[a-zA-Z]{2,}$/i),
     tel: (value) => value.match(/^\d{2,3}-\d{3,4}-\d{4,}$/i),
 }

@@ -1,0 +1,117 @@
+.main_page
+    display: flex
+    flex-direction: column
+    height: 100%
+    .navigation_area
+        flex: 1
+        max-height: 54px
+        display: flex
+        border-top: 1px solid rgba(0, 0, 0,0.5 )
+        border-bottom: 1px solid rgba(0, 0, 0,0.5 )
+        button
+            flex: 1
+            border: 0
+            font-size: 1.25em
+        #navigationFriendButton
+            border-right: 1px solid rgba(0, 0, 0,0.5 )
+        #navigationChatButton
+        .selected
+            background-color: rgba(0, 0, 0,0.5 )
+            color: white
+    .search_area
+        flex: 1
+        max-height: 54px
+        display: flex
+        align-items: flex-end
+        justify-content: center
+        .inputWrap
+            background-color: white
+            border: 1px solid
+            border-radius: 26px
+            height: 65%
+            width: 90%
+            margin: 0 auto
+            display: flex
+            align-items: center
+            .icon
+                filter: invert(0.4)
+                background-position: 50%
+                background-repeat: no-repeat
+                background-size: cover
+                width: 24px
+                height: 24px
+                margin-left: 12px
+            input
+                border: 0
+                width: 84%
+                height: 90%
+                padding: 0
+                padding-left: 8px
+                font-size: 1.2em
+                margin: 0
+    .main_contents
+        flex: 9
+        overflow-y: auto
+        display: flex
+        flex-direction: column
+        .my_profile_wrap
+            background-color: white
+            display: flex
+            align-items: center
+            justify-content: center
+            width: 100%
+            height: 76px
+            .profile
+                display: flex
+                width: 90%
+                height: 100%
+                align-items: center
+                .profile_image
+                    height: 48px
+                    width: 48px
+                    border-radius: 12px
+                    border: 1px solid rgba(0,0,0,0.3)
+                    background-position: 50%
+                    background-repeat: no-repeat
+                    background-size: cover
+                .name
+                    display: flex
+                    align-items: center
+                    height: 100%
+                    width: 100px
+                    padding-left: 12px
+                    font-size: 1.25em
+                    font-weight: bold
+                .whitespace
+                    flex: 1
+        .friend_profile_wrap
+            flex: 1
+            display: flex
+            flex-direction: column
+            width: 100%
+            align-items: center
+            &:first-child
+                border-top: 1px solid
+            .profile
+                height: 60px
+                display: flex
+                width: 90%
+                align-items: center
+                .profile_image
+                    height: 40px
+                    width: 40px
+                    border-radius: 12px
+                    border: 1px solid rgba(0,0,0,0.3)
+                    background-position: 50%
+                    background-repeat: no-repeat
+                    background-size: cover
+                .name
+                    display: flex
+                    align-items: center
+                    height: 100%
+                    width: 100px
+                    padding-left: 12px
+                    font-size: 1.25em
+                    font-weight: bold
+                .whitespace
+                    flex: 1

@@ -5,10 +5,13 @@ import { useHistory } from "react-router-dom"
 import { API_login } from "../../api"
 import BasicLayout from "../../layout/BasicLayout"
 import { happenApiError } from "../../util"
+import { AlertContext } from "../router"
+import API from "../../api/API"
+import jwt from "jsonwebtoken"
 import logo from "../../assets/logo/logo.svg"
 import "../../styles/login.sass"
 import "../../styles/App.css"
-import { AlertContext } from "../router"
+
 const Login = () => {
     const history = useHistory()
     const [isLogin, setIsLogin] = useState(false)
@@ -25,16 +28,21 @@ const Login = () => {
     }
     const moveToSignup = () => history.push("/signup")
     const login = async () => {
-        setIsLogin(true)
-        const response = await API_login({ id, password })
-        if (happenApiError(response, alertContext, null, true)) {
-            setIsLogin(false)
-            return
-        }
-        setIsLogin(false)
+        // setIsLogin(true)
+        // const response = await API_login({ id, password })
+        // if (happenApiError(response, alertContext, null, true)) {
+        //     setIsLogin(false)
+        //     return
+        // }
+        // const decoded = jwt.decode(response.data.token)
+        // if (typeof decoded !== "string") {
+        //     localStorage.jwt = response.data.token
+        //     API.defaults.headers["Authorization"] = `Bearer ${localStorage.jwt}`
+        // }
+        history.push("/main")
     }
     return (
-        <BasicLayout name={"로그인"}>
+        <BasicLayout>
             <div className="login_page">
                 <div className="logo_wrap">
                     <img src={logo} className={"App-logo"} alt={"logo"} />

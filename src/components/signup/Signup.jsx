@@ -1,9 +1,17 @@
 import { Button, CircularProgress, TextField } from "@material-ui/core"
+import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline"
 import React, { useContext, useRef, useState } from "react"
 import { useHistory } from "react-router-dom"
+import { API_confirmIdDuplication, API_signup } from "../../api"
 import BasicLayout from "../../layout/BasicLayout"
 import "../../styles/signup.sass"
-import { validate, resizeImage, getPreviewImage, alertDialog } from "../../util"
+import {
+    validate,
+    resizeImage,
+    getPreviewImage,
+    alertDialog,
+    happenApiError,
+} from "../../util"
 import { AlertContext } from "../router"
 import Navigation from "./Navigation"
 const Signup = () => {
@@ -34,6 +42,42 @@ const Signup = () => {
     const handleIconWrapClick = (e) => {
         e.stopPropagation()
         fileInputRef.current.click()
+    }
+    const handleCheckBtnClick = async () => {
+        setIsChecking(true)
+        if (!id) {
+            alertDialog(alertContext, "아이디를 입력해주세요.")
+            isChecked.current = false
+            setIsChecking(false)
+            return
+        }
+        if (!validate("id", id)) {
+            alertDialog(alertContext, "아이디가 유효하지 않습니다.")
+            isChecked.current = false
+            setIsChecking(false)
+            return
+        }
+        const response = await API_confirmIdDuplication({ id })
+        console.log("response", response)
+        if (happenApiError(response, alertContext, null, true)) {
+            isChecked.current = false
+            setIsChecking(false)
+            return
+        }
+        isChecked.current = true
+        setIsChecking(false)
+    }
+    const checkInput = (type, value) => {
+        if (!value) {
+            return false
+        }
+        return !validate(type, value)
+    }
+    const checkPassword = (value) => {
+        if (!value) {
+            return false
+        }
+        return password !== value
     }
     const handleImageFileChange = async (e) => {
         const { files } = e.target
@@ -110,22 +154,22 @@ const Signup = () => {
             }
             console.log(pair[0], pair[1])
         }
-    }
-    const handleCheckBtnClick = () => {
-        setIsChecking(true)
-    }
-    const checkInput = (type, value) => {
-        if (!value) {
-            return false
+        if (imageFile.fileName) {
+            const { blob, fileName } = imageFile
+            formData.append("profileImageFile", blob, fileName)
         }
-        return !validate(type, value)
-    }
-    const checkPassword = (value) => {
-        if (!value) {
-            return false
+        const response = await API_signup(formData)
+        if (happenApiError(response, alertContext, null, true)) {
+            setIsSubmitting(false)
+            return
         }
-        return password !== value
+        alertDialog(
+            alertContext,
+            "회원가입의 성공하셨습니다.\n로그인 페이지로 이동합니다."
+        )
+        history.push("../")
     }
+
     return (
         <BasicLayout>
             <div className="signup_page">
@@ -173,6 +217,9 @@ const Signup = () => {
                                         <CircularProgress size={20} />
                                     ) : (
                                         "중복확인"
+                                    )}
+                                    {isChecked.current && (
+                                        <CheckCircleOutlineIcon />
                                     )}
                                 </Button>
                             </div>
