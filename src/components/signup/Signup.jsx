@@ -165,7 +165,8 @@ const Signup = () => {
         }
         alertDialog(
             alertContext,
-            "회원가입의 성공하셨습니다.\n로그인 페이지로 이동합니다."
+            `회원가입의 성공하셨습니다.
+            로그인 페이지로 이동합니다.`
         )
         history.push("../")
     }

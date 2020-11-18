@@ -1,90 +1,34 @@
 import React from "react"
 import BasicLayout from "../../layout/BasicLayout"
 import "../../styles/main.sass"
-import jwt from "jsonwebtoken"
+import { Route, Switch, useHistory, useParams } from "react-router-dom"
 //import { alertDialog } from "../../util"
-
-const Main = () => {
-    // const history = useHistory()
-    // const alertContext = useContext(AlertContext)
-    const test = jwt.decode(localStorage.jwt)
-    console.log(test)
+import FriendTab from "./friend/friend"
+import ChatTab from "./chat/chat"
+const Main = (props) => {
+    const history = useHistory()
+    const { tab } = useParams()
     return (
         <BasicLayout>
             <div className="main_page">
                 <div className="navigation_area">
-                    <button id="navigationFriendButton" className={"selected"}>
+                    <button
+                        id="navigationFriendButton"
+                        className={tab === "friend" ? "selected" : ""}
+                        onClick={() => history.replace("/main/friend")}>
                         친구
                     </button>
-                    <button id="navigationChatButton">채팅</button>
+                    <button
+                        id="navigationChatButton"
+                        className={tab === "chat" ? "selected" : ""}
+                        onClick={() => history.replace("/main/chat")}>
+                        채팅
+                    </button>
                 </div>
-                <div className="search_area">
-                    <div className="inputWrap">
-                        <div className="icon search_icon" />
-                        <input id="keyword" type="text" />
-                    </div>
-                </div>
-                <div className="main_contents">
-                    <div className="my_profile_wrap">
-                        <div className="profile">
-                            <div className="profile_image person_icon"></div>
-                            <p className="name">홍길동</p>
-                            <div className="whitespace"></div>
-                        </div>
-                    </div>
-                    <div className="friend_profile_wrap">
-                        <div className="profile">
-                            <div className="profile_image person_icon"></div>
-                            <p className="name">홍길동</p>
-                            <div className="whitespace"></div>
-                        </div>
-                        <div className="profile">
-                            <div className="profile_image person_icon"></div>
-                            <p className="name">홍길동</p>
-                            <div className="whitespace"></div>
-                        </div>
-                        <div className="profile">
-                            <div className="profile_image person_icon"></div>
-                            <p className="name">홍길동</p>
-                            <div className="whitespace"></div>
-                        </div>
-                        <div className="profile">
-                            <div className="profile_image person_icon"></div>
-                            <p className="name">홍길동</p>
-                            <div className="whitespace"></div>
-                        </div>
-                        <div className="profile">
-                            <div className="profile_image person_icon"></div>
-                            <p className="name">홍길동</p>
-                            <div className="whitespace"></div>
-                        </div>
-                        <div className="profile">
-                            <div className="profile_image person_icon"></div>
-                            <p className="name">홍길동</p>
-                            <div className="whitespace"></div>
-                        </div>
-                        <div className="profile">
-                            <div className="profile_image person_icon"></div>
-                            <p className="name">홍길동</p>
-                            <div className="whitespace"></div>
-                        </div>
-                        <div className="profile">
-                            <div className="profile_image person_icon"></div>
-                            <p className="name">홍길동</p>
-                            <div className="whitespace"></div>
-                        </div>
-                        <div className="profile">
-                            <div className="profile_image person_icon"></div>
-                            <p className="name">홍길동</p>
-                            <div className="whitespace"></div>
-                        </div>
-                        <div className="profile">
-                            <div className="profile_image person_icon"></div>
-                            <p className="name">홍길동</p>
-                            <div className="whitespace"></div>
-                        </div>
-                    </div>
-                </div>
+                <Switch>
+                    <Route exact path="/main/friend" component={FriendTab} />
+                    <Route exact path="/main/chat" component={ChatTab} />
+                </Switch>
             </div>
         </BasicLayout>
     )

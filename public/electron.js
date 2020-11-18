@@ -25,7 +25,6 @@ function createWindow () {
   // process.env.NODE_ENV ? 
   //   mainWindow.loadURL('http://localhost:3030')
   //   : 
-  console.log("isDev",isDev)
   mainWindow.loadURL(isDev ? 'http://localhost:3030' : `file://${path.join(__dirname, '../build/index.html')}`)
   mainWindow.setMenuBarVisibility(false)
   mainWindow.on('closed', () => mainWindow = null)

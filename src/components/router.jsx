@@ -25,7 +25,7 @@ const Router = () => {
                 <Switch>
                     <Route exact path="/" component={Login} />
                     <Route exact path="/signup" component={Signup} />
-                    <Route path="/main" component={Main} />
+                    <Route exact path="/main/:tab" component={Main} />
                     {/* <Route path="/" component={Error} /> */}
                 </Switch>
                 <Alert {...alertBind} />

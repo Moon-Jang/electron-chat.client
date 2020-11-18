@@ -27,6 +27,12 @@ const Login = () => {
         setLoginData({ ...loginData, [name]: value })
     }
     const moveToSignup = () => history.push("/signup")
+
+    const handleInputKeyUp = (e) => {
+        if (e.key === "Enter") {
+            login()
+        }
+    }
     const login = async () => {
         if (!id) {
             alertDialog(alertContext, "아이디를 입력해주세요.")
@@ -43,11 +49,12 @@ const Login = () => {
             return
         }
         const decoded = jwt.decode(response.data.token)
+        console.log(decoded)
         if (typeof decoded !== "string") {
             localStorage.jwt = response.data.token
             API.defaults.headers["Authorization"] = `Bearer ${localStorage.jwt}`
         }
-        history.push("/main")
+        history.push("/main/friend")
     }
     return (
         <BasicLayout>
@@ -75,6 +82,7 @@ const Login = () => {
                                 variant="outlined"
                                 value={password}
                                 onChange={handleChange}
+                                onKeyUp={handleInputKeyUp}
                             />
                         </div>
                         <div className="button_wrap">
