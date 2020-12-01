@@ -2,7 +2,7 @@
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
 const isDev = require('electron-is-dev')
-
+console.time("startup")
 function createWindow () {
   // Create the browser window.
   let mainWindow = new BrowserWindow({
@@ -15,7 +15,9 @@ function createWindow () {
     fullscreenable: false,
     transparent: false,
     webPreferences: {
-      // preload: path.join(__dirname, 'preload.js')
+      nodeIntegration: true,
+      enableRemoteModule: true,
+      preload: path.join(__dirname, 'preload.js')
     }
   })
 
@@ -26,6 +28,7 @@ function createWindow () {
   //   mainWindow.loadURL('http://localhost:3030')
   //   : 
   mainWindow.loadURL(isDev ? 'http://localhost:3030' : `file://${path.join(__dirname, '../build/index.html')}`)
+  console.timeEnd("startup")
   mainWindow.setMenuBarVisibility(false)
   mainWindow.on('closed', () => mainWindow = null)
   // Open the DevTools.

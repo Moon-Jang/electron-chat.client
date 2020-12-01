@@ -3,21 +3,23 @@ import { API_getUserInfo, API_getFriendList } from "../../../api"
 import { happenApiError } from "../../../util"
 import SpeedDials from "../../common/SpeedDials"
 import { AlertContext } from "../../router"
-import FileCopyIcon from "@material-ui/icons/FileCopyOutlined"
-import SaveIcon from "@material-ui/icons/Save"
-import PrintIcon from "@material-ui/icons/Print"
-import ShareIcon from "@material-ui/icons/Share"
-import FavoriteIcon from "@material-ui/icons/Favorite"
+import ExitToAppIcon from "@material-ui/icons/ExitToApp"
+import PersonAddIcon from "@material-ui/icons/PersonAdd"
+import { useHistory } from "react-router-dom"
 
 const FriendTab = () => {
+    const history = useHistory()
     const actions = [
-        { icon: <FileCopyIcon />, name: "Copy", onClick: (e) => {} },
-        { icon: <SaveIcon />, name: "Save", onClick: (e) => {} },
-        { icon: <PrintIcon />, name: "Print", onClick: (e) => {} },
-        { icon: <ShareIcon />, name: "Share", onClick: (e) => {} },
-        { icon: <FavoriteIcon />, name: "Like", onClick: (e) => {} },
+        { icon: <PersonAddIcon />, name: "친구추가", onClick: () => {} },
+        {
+            icon: <ExitToAppIcon />,
+            name: "로그아웃",
+            onClick: () => {
+                localStorage.removeItem("jwt")
+                history.push("../")
+            },
+        },
     ]
-
     return (
         <>
             <div className="search_area">

@@ -1,36 +1,7 @@
 .main_page
     display: flex
     flex-direction: column
-    height: 100%
-    .MuiFab-root
-        position: fixed
-        width: 50px
-        height: 50px
-        background-color: rgba(0,0,0,0.4)
-        bottom: 20px
-        right: 30px
-        z-index: 999
-    #plus_button
-        position: fixed
-        width: 50px
-        height: 50px
-        background-color: rgba(0,0,0,0.4)
-        border-radius: 100%
-        bottom: 20px
-        right: 30px
-        z-index: 999
-        display: flex
-        align-items: center
-        justify-content: center
-        .horizontal_line
-            height: 50%
-            width: 2px
-            background: white
-            position: absolute
-        .vertical_line
-            width: 50%
-            height: 2px
-            background-color: white
+    height: 100vh
     .navigation_area
         flex: 1
         max-height: 54px
@@ -81,6 +52,9 @@
                 padding-left: 8px
                 font-size: 1.2em
                 margin: 0
+        &.chat
+            border-bottom: 1px solid rgba(0,0,0,0.3)
+            padding-bottom: 18px
     .main_contents
         flex: 9
         overflow-y: auto
@@ -129,6 +103,8 @@
                 height: 60px
                 display: flex
                 width: 90%
+                padding-left: 5%
+                padding-right: 5%
                 align-items: center
                 &:hover
                     background-color: rgba(0,0,0,0.1)
@@ -151,3 +127,42 @@
                     font-weight: bold
                 .whitespace
                     flex: 1
+        .chatting_room_wrap
+            display: flex
+            flex-direction: column
+            .chatting_room
+                height: 68px
+                display: flex
+                align-items: center
+                width: 90%
+                padding-left: 5%
+                padding-right: 5%
+                border-bottom: 1px solid rgba(0,0,0,0.3)
+                cursor: pointer
+                &:hover
+                    background-color: rgba(0,0,0,0.1)
+                .profile_image
+                    height: 40px
+                    width: 40px
+                    border-radius: 12px
+                    border: 1px solid rgba(0,0,0,0.3)
+                    background-position: 50%
+                    background-repeat: no-repeat
+                    background-size: contain
+                .name
+                    display: flex
+                    align-items: center
+                    height: 100%
+                    width: 100px
+                    padding-left: 12px
+                    font-size: 1.25em
+                    font-weight: bold
+                .whitespace
+                    flex: 1
+    .MuiSpeedDial-root
+        right: 24px !important
+        bottom: 24px !important
+        .MuiSpeedDial-fab
+            background-color: rgb(169,169,169)
+            &:hover
+                background-color: rgb(128,128,128)

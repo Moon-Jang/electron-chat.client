@@ -16,6 +16,15 @@ const useStyles = makeStyles((theme) => ({
             left: theme.spacing(2),
         },
     },
+    exampleWrapper: {
+        position: "relative",
+        marginTop: theme.spacing(3),
+        height: 380,
+    },
+    root: {
+        transform: "translateZ(0px)",
+        flexGrow: 1,
+    },
 }))
 
 export default function SpeedDials({ actions }) {
@@ -29,21 +38,26 @@ export default function SpeedDials({ actions }) {
     const handleOpen = () => {
         setOpen(true)
     }
-
+    const handleActionClick = (callback) => {
+        setOpen(false)
+        setTimeout(() => callback(), 200)
+    }
     return (
         <SpeedDial
-            ariaLabel="SpeedDial example"
+            ariaLabel="SpeedDial"
             className={classes.speedDial}
             icon={<SpeedDialIcon />}
             onClose={handleClose}
             onOpen={handleOpen}
-            open={open}>
+            open={open}
+            direction={"up"}>
             {actions &&
                 actions.map((action) => (
                     <SpeedDialAction
                         key={action.name}
                         icon={action.icon}
                         tooltipTitle={action.name}
+                        onClick={() => handleActionClick(action.onClick)}
                     />
                 ))}
         </SpeedDial>

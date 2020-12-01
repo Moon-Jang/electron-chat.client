@@ -1,5 +1,6 @@
 import React, { createContext, useState } from "react"
 import { Route, Switch } from "react-router-dom"
+import Chatting from "./chatting/Chatting"
 import Alert from "./common/Alert"
 import Login from "./login/Login"
 import Main from "./main/Main"
@@ -26,6 +27,11 @@ const Router = () => {
                     <Route exact path="/" component={Login} />
                     <Route exact path="/signup" component={Signup} />
                     <Route exact path="/main/:tab" component={Main} />
+                    <Route
+                        exact
+                        path="/chatting/:roomNo"
+                        component={Chatting}
+                    />
                     {/* <Route path="/" component={Error} /> */}
                 </Switch>
                 <Alert {...alertBind} />
