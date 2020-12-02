@@ -1,6 +1,6 @@
 import React, { createContext, useState } from "react"
 import { Route, Switch } from "react-router-dom"
-import Chatting from "./chatting/Chatting"
+import ChattingRoom from "./chatting/ChattingRoom"
 import Alert from "./common/Alert"
 import Login from "./login/Login"
 import Main from "./main/Main"
@@ -29,8 +29,8 @@ const Router = () => {
                     <Route exact path="/main/:tab" component={Main} />
                     <Route
                         exact
-                        path="/chatting/:roomNo"
-                        component={Chatting}
+                        path="/chatting/:roomIdx"
+                        component={ChattingRoom}
                     />
                     {/* <Route path="/" component={Error} /> */}
                 </Switch>

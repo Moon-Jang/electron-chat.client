@@ -122,3 +122,27 @@ export const alertDialog = (context,description) => {
     setVisible(true)
     setDescription(description)
 }
+
+export function createNewWindow(url) {
+    const remote = window.require("electron").remote
+    const curWindow = remote.getCurrentWindow()
+    const [curX, curY] = curWindow.getPosition()
+    const BrowserWindow = remote.BrowserWindow
+    const win = new BrowserWindow({
+        width: 390,
+        height: 620,
+        minWidth: 390,
+        minHeight: 620,
+        x: curX - 420 < 0 ? 0 : curX - 400,
+        y: curY,
+        show: true,
+        frame: true,
+        fullscreenable: false,
+        transparent: false,
+        webPreferences: {
+            nodeIntegration: true,
+        },
+    })
+    win.setMenuBarVisibility(false)
+    win.loadURL(url)
+}

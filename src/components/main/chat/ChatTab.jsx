@@ -3,6 +3,7 @@ import SpeedDials from "../../common/SpeedDials"
 import ExitToAppIcon from "@material-ui/icons/ExitToApp"
 import PersonAddIcon from "@material-ui/icons/PersonAdd"
 import { useHistory } from "react-router-dom"
+import { createNewWindow } from "../../../util"
 
 const ChatTab = () => {
     const history = useHistory()
@@ -58,10 +59,10 @@ const ChattingRoomWrap = () => {
 
 const ChattingRoom = (props) => {
     const { name } = props
-
     const openChat = (e) => {
         e.stopPropagation()
-        createBrowserWindow()
+        const url = `http://localhost:3030/#/chatting/1?name=${name}`
+        createNewWindow(url)
     }
     return (
         <div className="chatting_room" onClick={openChat}>
@@ -72,23 +73,4 @@ const ChattingRoom = (props) => {
     )
 }
 
-function createBrowserWindow() {
-    const remote = window.require("electron").remote
-    const BrowserWindow = remote.BrowserWindow
-    const win = new BrowserWindow({
-        width: 390,
-        height: 620,
-        minWidth: 390,
-        minHeight: 620,
-        show: true,
-        frame: true,
-        fullscreenable: false,
-        transparent: false,
-        webPreferences: {
-            nodeIntegration: true,
-        },
-    })
-    win.setMenuBarVisibility(false)
-    win.loadURL("http://localhost:3030/#/main/friend")
-}
 export default ChatTab

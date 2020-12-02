@@ -1,4 +1,183 @@
-.main_page
+.chatting_page
     display: flex
     flex-direction: column
     height: 100vh
+    .header_area
+        display: flex
+        height: 48px
+        border-bottom: 1px solid rgba(0,0,0,0.3)
+        .chatting_room_name_wrap
+            display: flex
+            flex: 6
+            align-items: center
+            span
+                font-size: 16px
+                overflow: hidden
+                text-overflow: ellipsis
+                display: -webkit-box
+                -webkit-line-clamp: 1
+                -webkit-box-orient: vertical
+                word-wrap: break-word
+                line-height: 1.2em
+                height: 1.2em
+                padding-left: 20px
+        .white_space
+            flex: 1
+        .hamburger_wrap
+            display: flex
+            width: 56px
+            align-items: center
+            justify-content: center
+            .hamburger
+                position: relative
+                width: 18px
+                height: 18px
+                input
+                    display: none
+                #hamburgerInput
+                    &:checked + label
+                        span
+                            &:nth-child(1)
+                                top: 50%
+                                transform: translateY(-50%) rotate(45deg)
+                            &:nth-child(2)
+                                opacity: 0
+                            &:nth-child(3)
+                                bottom: 50%
+                                transform: translateY(50%) rotate(-45deg)
+                    &:checked + label + div
+                        right: 10px
+                #hamburgerInput + label
+                    position: absolute
+                    width: 100%
+                    height: 100%
+                    cursor: pointer
+                    span
+                        display: block
+                        position: absolute
+                        width: 100%
+                        height: 2px
+                        border-radius: 30px
+                        background-color: #000
+                        transition: all .35s
+                        &:nth-child(1)
+                            top: 0
+                        &:nth-child(2)
+                            top: 50%
+                            transform: translateY(-50%)
+                        &:nth-child(3)
+                            bottom: 0
+                .menu_wrap
+                    position: fixed
+                    top: 39px
+                    right: -200px
+                    width: 200px
+                    height: 400px
+                    background-color: green
+                    transition: all .35s
+    .chatting_area
+        flex: 1
+        display: flex
+        flex-direction: column
+        overflow-y: auto
+        .chat_wrap
+            padding: 10px
+            &.system
+                display: flex
+                .message_wrap
+                    display: flex
+                    width: 100%
+                    align-items: center
+                    span
+                        display: block
+                    .message
+                        padding: 0 4px
+                    .bar
+                        flex: 1
+                        border-top: 1px solid rgba(0,0,0,0.3)
+                        height: 1px
+            &.message
+                .message_wrap
+                    .time
+                        width: 72px
+                        min-width: 72px
+                        display: flex !important
+                        align-items: flex-end
+                        font-size: 11px
+            &.message.other
+                .profile_wrap
+                    display: flex
+                    align-items: center
+                    .profile_image
+                        width: 40px
+                        height: 40px
+                        border-radius: 10px
+                        background-color: red
+                    p
+                        margin-left: 8px
+                .message_wrap
+                    display: flex
+                    span
+                        display: block
+                    .white_space
+                        width: 44px
+                        min-width: 44px
+                    .message
+                        background-color: rgba(0,0,0,0.3)
+                        border: 0px
+                        border-radius: 8px
+                        padding: 12px 6px
+                        color: white
+                        font-weight: bolder
+                    .time
+                        padding-left: 4px
+            &.message.me
+                .message_wrap
+                    display: flex
+                    flex-direction: row-reverse
+                    span
+                        display: block
+                    .white_space
+                        min-width: 25%
+                    .message
+                        background-color: rgba(0,0,0,0.3)
+                        border: 0px
+                        border-radius: 8px
+                        padding: 12px 6px
+                        color: white
+                        font-weight: bolder
+                    .time
+                        justify-content: flex-end
+                        padding-right: 4px
+    .input_area
+        display: flex
+        height: 72px
+        align-items: center
+        padding: 0 8px
+        border-top: 1px solid rgba(0,0,0,0.3)
+        >*
+            height: 36px
+            margin-right: 8px
+        .icon
+            width: 24px
+            height: 24px
+            background-color: yellow
+            border-radius: 100%
+            cursor: pointer
+        .input_message
+            flex: 1
+            height: 25%
+            border: 1px solid rgba(0,0,0,0.3)
+            border-radius: 10px
+            -moz-appearance: none
+            outline: 0px none transparent
+            padding: 10px 10px
+            font-size: 1em
+            resize: none
+        #send_button
+            width: 42px
+            border: 0
+            background-color: rgba(0,0,0,0.3)
+            border-radius: 10px
+            color: #fff
+            cursor: pointer

@@ -1,11 +1,10 @@
-import React, { useContext, useEffect, useState } from "react"
-import { API_getUserInfo, API_getFriendList } from "../../../api"
-import { happenApiError } from "../../../util"
+import React, { useEffect } from "react"
 import SpeedDials from "../../common/SpeedDials"
-import { AlertContext } from "../../router"
 import ExitToAppIcon from "@material-ui/icons/ExitToApp"
 import PersonAddIcon from "@material-ui/icons/PersonAdd"
 import { useHistory } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+import { fetchFriendList, fetchUserInfo } from "../../../actions/mainAction"
 
 const FriendTab = () => {
     const history = useHistory()
@@ -37,23 +36,16 @@ const FriendTab = () => {
     )
 }
 const MyProfileWrap = () => {
-    const alertContext = useContext(AlertContext)
-    const [profileProps, setProfileProps] = useState({
-        name: "",
-        imageUrl: "",
-    })
+    const profileProps = useSelector((store) => store.user.info)
+    const dispatch = useDispatch()
+
     useEffect(() => {
-        fetchData()
+        if (!profileProps) {
+            console.log("test")
+            dispatch(fetchUserInfo())
+        }
     }, []) //eslint-disable-line
 
-    const fetchData = async () => {
-        const response = await API_getUserInfo()
-        if (happenApiError(response, alertContext, null, true)) {
-            return
-        }
-        const { name, profile_image_url } = response.data.result
-        setProfileProps({ name, imageUrl: profile_image_url })
-    }
     return (
         <div className="my_profile_wrap">
             <Profile {...profileProps} />
@@ -67,36 +59,38 @@ const Profile = (props) => {
         <div className="profile">
             <div
                 className="profile_image"
-                style={{ backgroundImage: `url(${imageUrl})` }}
+                style={{ backgroundImage: `url(${imageUrl || ""})` }}
             />
-            <p className="name">{name}</p>
+            <p className="name">{name || ""}</p>
             <div className="whitespace" />
         </div>
     )
 }
 
 const FriendProfileWrap = () => {
-    const alertContext = useContext(AlertContext)
-    const [friendList, setfriendList] = useState([])
+    const friendList = useSelector((store) => store.user.friendList)
+    const dispatch = useDispatch()
+
     useEffect(() => {
-        fetchData()
+        if (!friendList) {
+            dispatch(fetchFriendList())
+        }
     }, []) //eslint-disable-line
 
-    const fetchData = async () => {
-        const response = await API_getFriendList()
-        if (happenApiError(response, alertContext, null, true)) {
-            return
-        }
-        setfriendList(response.data.result)
-    }
-    const friendProfiles = friendList.map((friend) => {
-        const { name, profile_image_url } = friend
-        return <Profile key={name} name={name} imageUrl={profile_image_url} />
-    })
+    const friendProfiles =
+        friendList &&
+        friendList.map((friend) => {
+            const { name, profile_image_url } = friend
+            return (
+                <Profile key={name} name={name} imageUrl={profile_image_url} />
+            )
+        })
 
     return (
         <div className="friend_profile_wrap">
-            {friendProfiles}
+            {friendProfiles !== false
+                ? friendProfiles
+                : "서버의 오류로 친구목록을 받아오지 못했습니다.\n다시 시도해주세요"}
             <div className="profile">
                 <div className="profile_image person_icon"></div>
                 <p className="name">홍길동</p>

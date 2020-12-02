@@ -1,18 +1,17 @@
-import React, { useEffect, useMemo } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import SocketContext from "./context/SocketContext"
 const WebSocketComponent = (props) => {
-    const { groupId, children } = props
-    // const history = useHistory()
-    // const [isClose, setIsClose] = useState(false)
-    // const [isError, setIsError] = useState(false)
-    // const [isConnect, setisConnect] = useState(false)
-    // const willUnMount = useRef(false)
+    const { roomIdx, children } = props
+    const [isClose, setIsClose] = useState(false)
+    const [isError, setIsError] = useState(false)
+    const [isConnect, setisConnect] = useState(false)
 
     const socket = useMemo(
         () =>
             new WebSocket(
-                "wss://8ts73v5434.execute-api.ap-northeast-2.amazonaws.com/dev" +
-                    `?group_id=${groupId}&Auth=${localStorage.jwt}`
+                "ws://localhost:3001?roomIdx=1"
+                // "wss://8ts73v5434.execute-api.ap-northeast-2.amazonaws.com/dev" +
+                //     `?group_id=${groupId}&Auth=${localStorage.jwt}`
             ),
         //eslint-disable-next-line
         []
@@ -21,7 +20,6 @@ const WebSocketComponent = (props) => {
     useEffect(() => {
         socket.onopen = function (event) {
             console.log("Websocket connect Success")
-            // setisConnect(true)
             const payload = {
                 action: "init",
             }
@@ -29,41 +27,32 @@ const WebSocketComponent = (props) => {
         }
         socket.onmessage = function (event) {
             //console.log("event",event)
-            const { routeKey, data } = JSON.parse(event.data)
+            const { routeKey, payload } = JSON.parse(event.data)
             console.log("routeKey", routeKey)
             if (!routeKey) {
                 return
             }
             if (routeKey === "init") {
-                // const info = data.info
-                // const title = data.title
-                // const categoryItems = data.categoryItems
-                // const adminItems = data.adminItems
-                // const contents = JSON.parse(data.content)
-                // if( !contents ) {
-                //     history.push("../selectgroup/mine")
-                // }
-                // if( !data || !info || !title || !categoryItems || !adminItems  ) {
-                //     // eslint-disable-next-line
-                //     const result_confirm = confirm("서버와 연결이 끊겼습니다\n 다시시도 하시겠습니까?")
-                //     if (result_confirm) {
-                //         history.go(0)
-                //     }
-                //     history.push("../selectgroup/mine")
-                // }
+                setisConnect(true)
+                const conversation = JSON.parse(payload.conversation)
+                console.log("payload", payload)
+                console.log("conversation", conversation)
+                if (!conversation) {
+                    setIsError(true)
+                }
                 // dispatch(fetchGroupInfo(groupId,info))
                 // dispatch(fetchGroupTitle(groupId, title))
                 // dispatch(fetchGroupCategoryItems(groupId, categoryItems))
                 // dispatch(fetchAdminCategoryItems(groupId, adminItems))
                 // dispatch(fetchGroupContents(groupId, contents))
             } else if (routeKey === "error") {
-                const { errorCode, errorString } = data
+                const { errorCode, errorString } = payload
                 alert(
                     "에러가 발생했습니다\n" +
                         `에러메세지: ${errorString}\n` +
                         `에러코드: ${errorCode}`
                 )
-            } else {
+            } else if (routeKey === "sendMessage") {
                 // const contents = JSON.parse(data.content)
                 // console.log("contents",contents)
                 // dispatch(fetchGroupContents(groupId, contents))
@@ -80,7 +69,8 @@ const WebSocketComponent = (props) => {
             console.log("WebSocket Error: ", error)
         }
         socket.onclose = function (event) {
-            // console.log("Disconnected from WebSocket.")
+            console.log("Disconnected from WebSocket.")
+            setIsClose(true)
             // if ( !isAdmin.current ) {
             //     history.replace(`../book/${groupId}`)
             // } else {
@@ -97,11 +87,10 @@ const WebSocketComponent = (props) => {
     }, [])
 
     return (
-        // <SocketContext.Provider
-        //     value={{ socket, isConnect, isClose, isError, groupId }}>
-        //     {children}
-        // </SocketContext.Provider>
-        <>{children}</>
+        <SocketContext.Provider
+            value={{ socket, isConnect, isClose, isError, roomIdx }}>
+            {children}
+        </SocketContext.Provider>
     )
 }
 
