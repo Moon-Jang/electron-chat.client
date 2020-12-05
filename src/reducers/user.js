@@ -1,12 +1,12 @@
 const userReducer = {
     FETCH_USER_INFO_SUCCESS: (state, action) => {
-        const { name, profile_image_url } = action.payload.result
+        const { idx, name, profile_image_url } = action.payload.result
         return Object.assign(
             {},
             state,
             {
-                ...state,
                 info: {
+                    idx,
                     name,
                     imageUrl: profile_image_url
                 }
@@ -18,7 +18,6 @@ const userReducer = {
             {},
             state,
             {
-                ...state,
                 info: false
             }
         )
@@ -29,7 +28,6 @@ const userReducer = {
             {},
             state,
             {
-                ...state,
                 friendList: result.sort( (a,b) => a.name.localeCompare(b.name) )
             }
         )
@@ -39,8 +37,43 @@ const userReducer = {
             {},
             state,
             {
-                ...state,
                 friendList: false
+            }
+        )
+    },
+    FIND_FRIENDS_SUCCESS: (state, action) => {
+        return Object.assign(
+            {},
+            state,
+            {
+                searchedFriendList: action.payload.result
+            }
+        )
+    },
+    FIND_FRIENDS_FAILURE: (state, action) => {
+        return Object.assign(
+            {},
+            state,
+            {
+                searchedFriendList: false
+            }
+        )
+    },
+    RESET_FIND_FRIENDS : (state, action) => {
+        return Object.assign(
+            {},
+            state,
+            {
+                searchedFriendList: undefined
+            }
+        )
+    },
+    SELECT_FRIEND: (state, action) => {
+        return Object.assign(
+            {},
+            state,
+            {
+                selectedFriend: action.payload
             }
         )
     },

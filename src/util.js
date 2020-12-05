@@ -123,6 +123,16 @@ export const alertDialog = (context,description) => {
     setDescription(description)
 }
 
+export const parseQueryString = (queryString) => {
+    const params = queryString.split('&')
+    const result = {}
+    params.forEach( param => {
+      const [key,value] = param.split('=')
+      result[key] = decodeURI(value)
+    })
+    return result
+}
+
 export function createNewWindow(url) {
     const remote = window.require("electron").remote
     const curWindow = remote.getCurrentWindow()
@@ -130,9 +140,9 @@ export function createNewWindow(url) {
     const BrowserWindow = remote.BrowserWindow
     const win = new BrowserWindow({
         width: 390,
-        height: 620,
+        height: 645,
         minWidth: 390,
-        minHeight: 620,
+        minHeight: 645,
         x: curX - 420 < 0 ? 0 : curX - 400,
         y: curY,
         show: true,

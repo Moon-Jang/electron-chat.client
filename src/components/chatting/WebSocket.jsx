@@ -1,15 +1,18 @@
 import React, { useEffect, useMemo, useState } from "react"
+import { useDispatch } from "react-redux"
+import { fetchConversation } from "../../actions/chattingAction"
 import SocketContext from "./context/SocketContext"
 const WebSocketComponent = (props) => {
-    const { roomIdx, children } = props
+    const { roomIdx, userName, children } = props
     const [isClose, setIsClose] = useState(false)
     const [isError, setIsError] = useState(false)
     const [isConnect, setisConnect] = useState(false)
+    const dispatch = useDispatch()
 
     const socket = useMemo(
         () =>
             new WebSocket(
-                "ws://localhost:3001?roomIdx=1"
+                `ws://localhost:3001?roomIdx=1&userName=${userName}`
                 // "wss://8ts73v5434.execute-api.ap-northeast-2.amazonaws.com/dev" +
                 //     `?group_id=${groupId}&Auth=${localStorage.jwt}`
             ),
@@ -23,23 +26,24 @@ const WebSocketComponent = (props) => {
             const payload = {
                 action: "init",
             }
-            socket.send(JSON.stringify(payload))
+            setTimeout(() => socket.send(JSON.stringify(payload)), 100)
         }
         socket.onmessage = function (event) {
             //console.log("event",event)
             const { routeKey, payload } = JSON.parse(event.data)
+            const conversation = JSON.parse(payload.conversation)
+            console.log("conversation", conversation)
             console.log("routeKey", routeKey)
             if (!routeKey) {
                 return
             }
+            if (!conversation) {
+                setIsError(true)
+                return
+            }
             if (routeKey === "init") {
                 setisConnect(true)
-                const conversation = JSON.parse(payload.conversation)
-                console.log("payload", payload)
-                console.log("conversation", conversation)
-                if (!conversation) {
-                    setIsError(true)
-                }
+                dispatch(fetchConversation(conversation))
                 // dispatch(fetchGroupInfo(groupId,info))
                 // dispatch(fetchGroupTitle(groupId, title))
                 // dispatch(fetchGroupCategoryItems(groupId, categoryItems))
@@ -53,6 +57,7 @@ const WebSocketComponent = (props) => {
                         `에러코드: ${errorCode}`
                 )
             } else if (routeKey === "sendMessage") {
+                dispatch(fetchConversation(conversation))
                 // const contents = JSON.parse(data.content)
                 // console.log("contents",contents)
                 // dispatch(fetchGroupContents(groupId, contents))

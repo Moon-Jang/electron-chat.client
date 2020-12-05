@@ -4,6 +4,7 @@ import ChattingRoom from "./chatting/ChattingRoom"
 import Alert from "./common/Alert"
 import Login from "./login/Login"
 import Main from "./main/Main"
+import Profile from "./profile/Profile"
 import Signup from "./signup/Signup"
 
 export const AlertContext = createContext(null)
@@ -27,6 +28,7 @@ const Router = () => {
                     <Route exact path="/" component={Login} />
                     <Route exact path="/signup" component={Signup} />
                     <Route exact path="/main/:tab" component={Main} />
+                    <Route exact path="/profile" component={Profile} />
                     <Route
                         exact
                         path="/chatting/:roomIdx"

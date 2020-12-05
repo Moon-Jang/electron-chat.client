@@ -74,13 +74,13 @@
                 align-items: center
                 border-bottom: 1px solid rgba(0,0,0,0.4)
                 .profile_image
-                    height: 48px
+                    height: 46px
                     width: 48px
                     border-radius: 12px
                     border: 1px solid rgba(0,0,0,0.3)
                     background-position: 50%
                     background-repeat: no-repeat
-                    background-size: contain
+                    background-size: cover
                     cursor: pointer
                 .name
                     display: flex
@@ -106,6 +106,8 @@
                 padding-left: 5%
                 padding-right: 5%
                 align-items: center
+                &.selected
+                    background-color: rgba(0,0,0,0.2)
                 &:hover
                     background-color: rgba(0,0,0,0.1)
                 .profile_image
@@ -115,7 +117,7 @@
                     border: 1px solid rgba(0,0,0,0.3)
                     background-position: 50%
                     background-repeat: no-repeat
-                    background-size: contain
+                    background-size: cover
                     cursor: pointer
                 .name
                     display: flex
@@ -159,9 +161,107 @@
                     font-weight: bold
                 .whitespace
                     flex: 1
+        .add_friend_overlay
+            position: fixed
+            top: 0
+            width: 100%
+            height: 100vh
+            z-index: 990
+            background-color: rgba(0,0,0,0.3)
+            display: flex
+            justify-content: center
+            align-items: center
+            .add_friend_wrap
+                display: flex
+                flex-direction: column
+                width: 304px
+                height: 464px
+                z-index: 991
+                background-color: #fff
+                box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4)
+                -webkit-background-clip: padding-box
+                -moz-background-clip: padding-box
+                .header
+                    display: flex
+                    position: relative
+                    height: 60px
+                    align-items: center
+                    border-bottom: 1px solid rgba(0, 0, 0,0.3 )
+                    p
+                        padding-left: 20px
+                        font-size: 16px
+                        font-weight: bold
+                    button
+                        position: absolute
+                        top: 0
+                        right: 0
+                .search_wrap
+                    display: flex
+                    height: 60px
+                    align-items: center
+                    justify-content: center
+                    .inputWrap
+                        background-color: white
+                        border: 1px solid rgba(0, 0, 0,0.4 )
+                        border-radius: 26px
+                        height: 26px
+                        width: 90%
+                        margin: 0 auto
+                        display: flex
+                        align-items: center
+                        .icon
+                            filter: invert(0.4)
+                            background-position: 50%
+                            background-repeat: no-repeat
+                            background-size: cover
+                            width: 18px
+                            height: 18px
+                            margin-left: 8px
+                        input
+                            border: 0
+                            width: 84%
+                            height: 90%
+                            padding: 0
+                            padding-left: 8px
+                            font-size: 14px
+                            margin: 0
+                .friend_profile_wrap
+                    flex: 1
+                    overflow-y: auto
+                    margin-top: 0
+                    margin-bottom: 10px
+                    position: relative
+                    cursor: pointer
+                    .profile
+                        height: 48px
+                        .profile_image
+                            height: 28px
+                            width: 28px
+                        .name
+                            font-size: 14px
+                        .id
+                            position: absolute
+                            right: 24px
+                .add_button_wrap
+                    display: flex
+                    height: 40px
+                    flex-direction: row-reverse
+                    padding-bottom: 20px
+                    padding-right: 20px
+                    .MuiButton-root
+                        padding: 0
+                    button
+                        height: 36px
+                        width: 84px
+                        border: 0
+                        border-radius: 6px
+                        background-color: rgba(0,0,0,0.3)
+                        span
+                            font-weight: bolder
     .MuiSpeedDial-root
         right: 24px !important
         bottom: 24px !important
+        z-index: 899
         .MuiSpeedDial-fab
             background-color: rgb(169,169,169)
             &:hover

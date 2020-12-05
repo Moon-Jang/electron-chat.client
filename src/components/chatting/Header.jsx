@@ -1,8 +1,5 @@
 import React from "react"
-import { useLocation } from "react-router-dom"
-const Header = () => {
-    const { search } = useLocation()
-    const roomName = decodeURIComponent(search.slice(6))
+const Header = ({ roomName }) => {
     return (
         <div className="header_area">
             <div className="chatting_room_name_wrap">

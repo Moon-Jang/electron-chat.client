@@ -11,7 +11,29 @@ const fetchFriendList = () => {
         payload: {}
     }
 }
+
+const selectFriend = (idx) => {
+    return {
+        type: types.SELECT_FRIEND,
+        payload: idx
+    }
+}
+
+const findFriends = (keyword) => {
+    return {
+        type: types.FIND_FRIENDS_REQUEST,
+        payload: keyword
+    }
+}
+const resetFindFriends = () => {
+    return {
+        type: types.RESET_FIND_FRIENDS
+    }
+}
 export {
     fetchUserInfo,
-    fetchFriendList
+    fetchFriendList,
+    selectFriend,
+    findFriends,
+    resetFindFriends
 }

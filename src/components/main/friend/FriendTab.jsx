@@ -1,15 +1,21 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import SpeedDials from "../../common/SpeedDials"
 import ExitToAppIcon from "@material-ui/icons/ExitToApp"
 import PersonAddIcon from "@material-ui/icons/PersonAdd"
 import { useHistory } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchFriendList, fetchUserInfo } from "../../../actions/mainAction"
+import AddFriendModal from "./AddFriendModal"
 
 const FriendTab = () => {
     const history = useHistory()
+    const visibleState = useState(false)
     const actions = [
-        { icon: <PersonAddIcon />, name: "친구추가", onClick: () => {} },
+        {
+            icon: <PersonAddIcon />,
+            name: "친구추가",
+            onClick: () => visibleState[1](true),
+        },
         {
             icon: <ExitToAppIcon />,
             name: "로그아웃",
@@ -24,12 +30,13 @@ const FriendTab = () => {
             <div className="search_area">
                 <div className="inputWrap">
                     <div className="icon search_icon" />
-                    <input id="keyword" type="text" />
+                    <input id="keyword" type="text" autoComplete="off" />
                 </div>
             </div>
             <div className="main_contents">
                 <MyProfileWrap />
                 <FriendProfileWrap />
+                <AddFriendModal visibleState={visibleState} />
             </div>
             <SpeedDials actions={actions} />
         </>
@@ -54,9 +61,16 @@ const MyProfileWrap = () => {
 }
 
 const Profile = (props) => {
-    const { name, imageUrl } = props
+    const { idx, name, imageUrl } = props
+    const history = useHistory()
+
+    const handleClick = (e) => {
+        e.stopPropagation()
+        const queryString = `?idx=${idx}&name=${name}&imageUrl=${imageUrl}`
+        history.push("/profile" + queryString)
+    }
     return (
-        <div className="profile">
+        <div className="profile" onClick={handleClick}>
             <div
                 className="profile_image"
                 style={{ backgroundImage: `url(${imageUrl || ""})` }}
@@ -79,10 +93,9 @@ const FriendProfileWrap = () => {
 
     const friendProfiles =
         friendList &&
-        friendList.map((friend) => {
-            const { name, profile_image_url } = friend
+        friendList.map((el) => {
             return (
-                <Profile key={name} name={name} imageUrl={profile_image_url} />
+                <Profile key={el.idx} imageUrl={el.profile_image_url} {...el} />
             )
         })
 
