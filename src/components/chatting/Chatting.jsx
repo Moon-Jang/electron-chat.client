@@ -17,7 +17,7 @@ const Chatting = (props) => {
         if (!conversation) {
             return
         }
-        return conversation.map((el) => {
+        return conversation.map((el, idx) => {
             switch (el.type) {
                 case "system":
                     return <SystemChat key={el.time} message={el.message} />
@@ -25,12 +25,21 @@ const Chatting = (props) => {
                     return el.name === userName ? (
                         <MyChat key={el.time} {...el} />
                     ) : (
-                        <OtherChat key={el.time} {...el} />
+                        <OtherChat
+                            key={el.time}
+                            parentChat={conversation[idx - 1]}
+                            {...el}
+                        />
                     )
                 // case "picture":
                 //     return
                 default:
-                    throw Error("unExpected type")
+                    return (
+                        <SystemChat
+                            key={idx}
+                            message={"메세지 로딩중 서버 에러가 발생했습니다."}
+                        />
+                    )
             }
         })
     }
@@ -54,14 +63,17 @@ const SystemChat = React.memo(({ message }) => {
 })
 
 const OtherChat = React.memo((props) => {
-    const { name, message, time } = props
+    const { name, message, time, parentChat, profileImage } = props
     const timeString = useMemo(() => formatTime(time), [time])
-
     return (
         <div className="chat_wrap message other">
             <div className="profile_wrap">
-                <div className="profile_image"></div>
-                <p>{name}</p>
+                {parentChat.name !== name && (
+                    <>
+                        <div className="profile_image"></div>
+                        <p>{name}</p>
+                    </>
+                )}
             </div>
             <div className="message_wrap">
                 <span className="white_space"></span>

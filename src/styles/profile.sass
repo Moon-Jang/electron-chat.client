@@ -33,7 +33,21 @@
     .button_area
         display: flex
         justify-content: center
-        algin-items: center
+        align-items: center
         width: 100%
         height: 100px
         border-top: 1px solid rgba(0,0,0,0.3)
+        .chat_button_wrap
+            flex-direction: column
+            display: flex
+            justify-content: center
+            align-items: center
+            .chat_icon
+                width: 36px
+                height: 36px
+                background-position: 50%
+                background-repeat: no-repeat
+                background-size: cover
+                background-image: url("../assets/icons/chat.svg")
+                &:hover
+                    filter: invert(0.4)

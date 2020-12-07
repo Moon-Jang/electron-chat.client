@@ -5,4 +5,13 @@ import API_getUserInfo from "./users/idx/getUserInfo"
 import API_getFriendList from "./friends/getFriendList"
 import API_findFriends from "./common/findFriends"
 import API_addFriend from "./friends/idx/addFriend"
-export { API_login, API_confirmIdDuplication,API_signup,API_getUserInfo,API_getFriendList, API_findFriends, API_addFriend }
+import API_accessPersonalRoom from "./common/accessPersonalRoom"
+
+export { API_login,
+    API_confirmIdDuplication,
+    API_accessPersonalRoom,
+    API_signup,API_getUserInfo,
+    API_getFriendList,
+    API_findFriends,
+    API_addFriend
+}

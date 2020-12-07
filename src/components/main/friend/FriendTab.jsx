@@ -66,7 +66,7 @@ const Profile = (props) => {
 
     const handleClick = (e) => {
         e.stopPropagation()
-        const queryString = `?idx=${idx}&name=${name}&imageUrl=${imageUrl}`
+        const queryString = `?friendIdx=${idx}&friendName=${name}&imageUrl=${imageUrl}`
         history.push("/profile" + queryString)
     }
     return (

@@ -12,6 +12,7 @@ const ChattingRoom = (props) => {
     const { search } = useLocation()
     const queryString = parseQueryString(search.slice(1))
     const { roomName, userName } = queryString
+    const isPersonal = queryString.isPersonal === "true" ? true : false
 
     const clearView = () => {
         const hamburgerInput = document.getElementById("hamburgerInput")
@@ -24,7 +25,11 @@ const ChattingRoom = (props) => {
         <BasicLayout>
             <WebSocketComponent roomIdx={roomIdx} userName={userName}>
                 <div className="chatting_page" onClick={clearView}>
-                    <Header roomName={roomName} />
+                    <Header
+                        roomName={roomName}
+                        userName={userName}
+                        isPersonal={isPersonal}
+                    />
                     <Chatting userName={userName} />
                     <Footer userName={userName} />
                 </div>

@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react"
 import { useDispatch } from "react-redux"
 import { fetchConversation } from "../../actions/chattingAction"
+import { fetchUserInfo } from "../../actions/mainAction"
 import SocketContext from "./context/SocketContext"
 const WebSocketComponent = (props) => {
     const { roomIdx, userName, children } = props
@@ -12,9 +13,9 @@ const WebSocketComponent = (props) => {
     const socket = useMemo(
         () =>
             new WebSocket(
-                `ws://localhost:3001?roomIdx=1&userName=${userName}`
-                // "wss://8ts73v5434.execute-api.ap-northeast-2.amazonaws.com/dev" +
-                //     `?group_id=${groupId}&Auth=${localStorage.jwt}`
+                `ws://localhost:3001?roomIdx=${roomIdx}&userName=${userName}`
+                // "wss://nsi43m46q1.execute-api.ap-northeast-2.amazonaws.com/prod" +
+                //     `?roomIdx=${roomIdx}&userName=${userName}`
             ),
         //eslint-disable-next-line
         []
@@ -23,14 +24,16 @@ const WebSocketComponent = (props) => {
     useEffect(() => {
         socket.onopen = function (event) {
             console.log("Websocket connect Success")
+            dispatch(fetchUserInfo())
             const payload = {
                 action: "init",
             }
             setTimeout(() => socket.send(JSON.stringify(payload)), 100)
         }
         socket.onmessage = function (event) {
-            //console.log("event",event)
+            console.log("event", event)
             const { routeKey, payload } = JSON.parse(event.data)
+            console.log("payload", payload)
             const conversation = JSON.parse(payload.conversation)
             console.log("conversation", conversation)
             console.log("routeKey", routeKey)

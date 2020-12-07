@@ -1,9 +1,20 @@
 import React from "react"
-const Header = ({ roomName }) => {
+const Header = (props) => {
+    const { roomName, userName } = props
+    const parseRoomName = () => {
+        if (!roomName.includes("$")) {
+            return roomName
+        }
+        return roomName
+            .split("$")
+            .filter((el) => el !== userName)
+            .join(" ")
+    }
+
     return (
         <div className="header_area">
             <div className="chatting_room_name_wrap">
-                <span>{roomName}</span>
+                <span>{parseRoomName()}</span>
             </div>
             <div className="white_space"></div>
             <div className="hamburger_wrap">
