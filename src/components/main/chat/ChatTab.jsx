@@ -42,6 +42,7 @@ const ChatTab = () => {
 const ChattingRoomWrap = () => {
     const { user } = useStore().getState()
     const { info } = user
+    console.log("info.name", info.name)
     return (
         <div className="chatting_room_wrap">
             <ChattingRoom roomName={"채팅방1"} userName={info.name} />

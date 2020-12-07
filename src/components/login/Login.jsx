@@ -1,5 +1,5 @@
 import { Button, CircularProgress, TextField } from "@material-ui/core"
-import React, { useContext } from "react"
+import React, { useContext, useEffect } from "react"
 import { useState } from "react"
 import { useHistory } from "react-router-dom"
 import { API_login } from "../../api"
@@ -22,6 +22,11 @@ const Login = () => {
     })
     const { id, password } = loginData
 
+    useEffect(() => {
+        if (history.action === "PUSH") {
+            history.go(0)
+        }
+    }, []) //eslint-disable-line
     const handleChange = (e) => {
         const { name, value } = e.target
         setLoginData({ ...loginData, [name]: value })

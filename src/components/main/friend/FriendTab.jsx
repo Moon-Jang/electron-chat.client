@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchFriendList, fetchUserInfo } from "../../../actions/mainAction"
 import AddFriendModal from "./AddFriendModal"
+import { createNewWindow } from "../../../util"
 
 const FriendTab = () => {
     const history = useHistory()
@@ -62,12 +63,12 @@ const MyProfileWrap = () => {
 
 const Profile = (props) => {
     const { idx, name, imageUrl } = props
-    const history = useHistory()
 
     const handleClick = (e) => {
         e.stopPropagation()
         const queryString = `?friendIdx=${idx}&friendName=${name}&imageUrl=${imageUrl}`
-        history.push("/profile" + queryString)
+        const url = `http://localhost:3030/#/profile/${queryString}`
+        createNewWindow(url)
     }
     return (
         <div className="profile" onClick={handleClick}>

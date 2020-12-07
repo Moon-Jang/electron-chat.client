@@ -30,9 +30,15 @@ const resetFindFriends = () => {
         type: types.RESET_FIND_FRIENDS
     }
 }
+const fetchChattingRoomList = () => {
+    return {
+        type: types.FETCH_CHATTING_ROOM_LIST_REQUEST
+    }
+}
 export {
     fetchUserInfo,
     fetchFriendList,
+    fetchChattingRoomList,
     selectFriend,
     findFriends,
     resetFindFriends

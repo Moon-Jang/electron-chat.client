@@ -21,9 +21,6 @@ function* fetchUser(action) {
 function* fetchFriendList(action) {
     try {
         const response = yield call(API_getFriendList)
-        if(!response || response?.status !== 200) {
-            throw response
-        }
         yield put({type: FETCH_FRIEND_LIST_SUCCESS, payload: response.data})
     } catch (e) {
         console.log('saga errorCatch', e)
@@ -35,9 +32,6 @@ function* findFriends(action) {
     try {
         const { payload } = action
         const response = yield call(API_findFriends,{ keyword: payload })
-        if(!response || response?.status !== 200) {
-            throw response
-        }
         yield put({type: FIND_FRIENDS_SUCCESS, payload: response.data})
     } catch (e) {
         console.log('saga errorCatch', e)

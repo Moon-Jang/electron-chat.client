@@ -1,5 +1,4 @@
 import API from "../API"
-import API_errorHandling from "../error"
 
 /* payload
     keyword
@@ -10,7 +9,7 @@ const API_findFriends = async (payload) => {
     try {
         response = await API.get(`/findFriends?keyword=${keyword}`)
     } catch (e) {
-        response = API_errorHandling(e)
+        throw e
     } finally {
         return response
     }

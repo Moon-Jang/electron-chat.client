@@ -4,8 +4,25 @@ const chattingReducer = {
             {},
             state,
             {
-                ...state,
                 conversation: action.payload
+            }
+        )
+    },
+    FETCH_CHATTING_ROOM_LIST_SUCCESS: (state, action) => {
+        return Object.assign(
+            {},
+            state,
+            {
+                rooms: action.payload.result
+            }
+        )
+    },
+    FETCH_CHATTING_ROOM_LIST_FAILURE: (state, action) => {
+        return Object.assign(
+            {},
+            state,
+            {
+                rooms: false
             }
         )
     },

@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken"
 import API from "../API"
-import API_errorHandling from "../error"
 
 const API_getFriendList = async () => {
     let response
@@ -8,7 +7,7 @@ const API_getFriendList = async () => {
     try {
         response = await API.get(`/users/${idx}/friends?fields=idx,name,profile_image_url`)
     } catch (e) {
-        response = API_errorHandling(e)
+       throw e
     } finally {
         return response
     }
