@@ -1,10 +1,10 @@
 import { call, takeLatest, put, all, fork } from 'redux-saga/effects'
 import { FETCH_CHATTING_ROOM_LIST_REQUEST, FETCH_CHATTING_ROOM_LIST_SUCCESS } from '../actions/types'
-import { API_getFriendList } from '../api'
 import { FETCH_CHATTING_ROOM_LIST_FAILURE } from "../actions/types"
+import { API_getChattingRooms } from '../api'
 function* fetchChattingRoomList(action) {
     try {
-        const response = yield call(API_getFriendList)
+        const response = yield call(API_getChattingRooms)
         yield put({type: FETCH_CHATTING_ROOM_LIST_SUCCESS, payload: response.data})
     } catch (e) {
         console.log('saga errorCatch', e)

@@ -143,24 +143,38 @@
                 cursor: pointer
                 &:hover
                     background-color: rgba(0,0,0,0.1)
-                .profile_image
-                    height: 40px
-                    width: 40px
-                    border-radius: 12px
-                    border: 1px solid rgba(0,0,0,0.3)
-                    background-position: 50%
-                    background-repeat: no-repeat
-                    background-size: contain
+                .profile_image_wrap
+                    height: 100%
+                    width: 48px
+                    display: flex
+                    align-items: center
+                    justify-content: center
+                    position: relative
+                    .profile_image
+                        height: 40px
+                        width: 40px
+                        border-radius: 12px
+                        border: 1px solid rgba(0,0,0,0.3)
+                        background-position: 50%
+                        background-repeat: no-repeat
+                        background-size: contain
+                    .profile_image_multiple
+                        position: absolute
+                        border-radius: 8px
+                        border: 1px solid rgba(0,0,0,0.3)
+                        background-position: 50%
+                        background-repeat: no-repeat
+                        background-size: contain
+                        background-color: #fff
                 .name
                     display: flex
                     align-items: center
-                    height: 100%
-                    width: 100px
+                    flex: 1
                     padding-left: 12px
                     font-size: 1.25em
                     font-weight: bold
                 .whitespace
-                    flex: 1
+
         .add_friend_overlay
             position: fixed
             top: 0

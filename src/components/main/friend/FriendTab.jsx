@@ -49,7 +49,6 @@ const MyProfileWrap = () => {
 
     useEffect(() => {
         if (!profileProps) {
-            console.log("test")
             dispatch(fetchUserInfo())
         }
     }, []) //eslint-disable-line
