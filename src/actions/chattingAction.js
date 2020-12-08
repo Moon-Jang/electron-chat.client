@@ -5,6 +5,12 @@ const fetchConversation = (conversation) => ({
     payload: conversation
 })
 
+const fetchParticipantList = (roomIdx) => ({
+    type: types.FETCH_PARTICIPANT_LIST_REQUEST,
+    payload: { roomIdx }
+})
+
 export {
-    fetchConversation
+    fetchConversation,
+    fetchParticipantList
 }

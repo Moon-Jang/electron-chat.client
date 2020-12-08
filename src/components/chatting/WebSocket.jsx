@@ -1,6 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react"
 import { useDispatch } from "react-redux"
-import { fetchConversation } from "../../actions/chattingAction"
+import {
+    fetchConversation,
+    fetchParticipantList,
+} from "../../actions/chattingAction"
 import { fetchUserInfo } from "../../actions/mainAction"
 import SocketContext from "./context/SocketContext"
 const WebSocketComponent = (props) => {
@@ -25,6 +28,7 @@ const WebSocketComponent = (props) => {
         socket.onopen = function (event) {
             console.log("Websocket connect Success")
             dispatch(fetchUserInfo())
+            dispatch(fetchParticipantList(roomIdx))
             const payload = {
                 action: "init",
             }

@@ -112,7 +112,11 @@
                         width: 40px
                         height: 40px
                         border-radius: 10px
-                        background-color: red
+                        background-position: 50%
+                        border: 1px solid rgba(0,0,0,0.3)
+                        background-repeat: no-repeat
+                        background-size: cover
+                        background-color: #fff
                     p
                         margin-left: 8px
                 .message_wrap
@@ -164,6 +168,12 @@
             background-color: yellow
             border-radius: 100%
             cursor: pointer
+            &.emoticon
+                background-image: url("../assets/icons/emoticon.svg")
+            &.attachment
+                background-image: url("../assets/icons/attachment.svg")
+            &.picture
+                background-image: url("../assets/icons/picture.svg")
         .input_message
             flex: 1
             height: 25%

@@ -4,6 +4,7 @@ import SocketContext from "./context/SocketContext"
 const Chatting = (props) => {
     const { userName } = props
     const { isConnect } = useContext(SocketContext)
+    const participants = useSelector((store) => store.chatting.participants)
     const conversation = useSelector((store) => store.chatting.conversation)
     const wrapDivRef = useRef(null)
     useEffect(() => {
@@ -17,6 +18,9 @@ const Chatting = (props) => {
         if (!conversation) {
             return
         }
+        if (!participants) {
+            return
+        }
         return conversation.map((el, idx) => {
             switch (el.type) {
                 case "system":
@@ -28,6 +32,7 @@ const Chatting = (props) => {
                         <OtherChat
                             key={el.time}
                             parentChat={conversation[idx - 1]}
+                            participants={participants}
                             {...el}
                         />
                     )
@@ -63,14 +68,19 @@ const SystemChat = React.memo(({ message }) => {
 })
 
 const OtherChat = React.memo((props) => {
-    const { name, message, time, parentChat, profileImage } = props
+    const { name, message, time, parentChat, participants } = props
     const timeString = useMemo(() => formatTime(time), [time])
+    const imageUrl = participants.find((el) => el.name === name).profileImageUrl
     return (
         <div className="chat_wrap message other">
             <div className="profile_wrap">
                 {parentChat.name !== name && (
                     <>
-                        <div className="profile_image"></div>
+                        <div
+                            className="profile_image"
+                            style={{
+                                backgroundImage: `url(${imageUrl})`,
+                            }}></div>
                         <p>{name}</p>
                     </>
                 )}

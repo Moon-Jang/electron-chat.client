@@ -219,6 +219,9 @@ const ChattingRoom = (props) => {
         <div className="chatting_room" onDoubleClick={openChat}>
             {renderProfileImages()}
             <p className="name">{parseName()}</p>
+            <p className="participants_number">
+                {isPersonal ? "" : `(${participants.length + 1})`}
+            </p>
             <div className="whitespace"></div>
         </div>
     )

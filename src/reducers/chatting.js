@@ -26,6 +26,24 @@ const chattingReducer = {
             }
         )
     },
+    FETCH_PARTICIPANT_LIST_SUCCESS: (state, action) => {
+        return Object.assign(
+            {},
+            state,
+            {
+                participants: action.payload.result
+            }
+        )
+    },
+    FETCH_PARTICIPANT_LIST_FAILURE: (state, action) => {
+        return Object.assign(
+            {},
+            state,
+            {
+                participants: false
+            }
+        )
+    },
 }
 const reducer = (state = {}, action) => {
     if(chattingReducer[action.type] === undefined) {
