@@ -3,7 +3,7 @@ import { useSelector } from "react-redux"
 import SocketContext from "./context/SocketContext"
 const Chatting = (props) => {
     const { userName } = props
-    const { isConnect } = useContext(SocketContext)
+    const { isConnect, isClose } = useContext(SocketContext)
     const participants = useSelector((store) => store.chatting.participants)
     const conversation = useSelector((store) => store.chatting.conversation)
     const wrapDivRef = useRef(null)
@@ -20,6 +20,9 @@ const Chatting = (props) => {
         }
         if (!participants) {
             return
+        }
+        if (isClose) {
+            return <div>서버 연결이 끊겼습니다. 다시 시도해주세요.</div>
         }
         return conversation.map((el, idx) => {
             switch (el.type) {

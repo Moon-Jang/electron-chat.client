@@ -9,7 +9,6 @@ const fetchParticipantList = (roomIdx) => ({
     type: types.FETCH_PARTICIPANT_LIST_REQUEST,
     payload: { roomIdx }
 })
-
 export {
     fetchConversation,
     fetchParticipantList

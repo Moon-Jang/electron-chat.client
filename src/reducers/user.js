@@ -1,4 +1,13 @@
 const userReducer = {
+    FETCH_USER_INFO: (state, action) => {
+        return Object.assign(
+            {},
+            state,
+            {
+                info: action.payload
+            }
+        )
+    },
     FETCH_USER_INFO_SUCCESS: (state, action) => {
         const { idx, name, profile_image_url } = action.payload.result
         return Object.assign(

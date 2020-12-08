@@ -52,7 +52,7 @@ const Footer = (props) => {
     return (
         <div className="input_area">
             <div className="icon emoticon"></div>
-            <div className="icon file"></div>
+            <div className="icon attachment"></div>
             <div className="icon picture"></div>
             <textarea
                 className="input_message"

@@ -14,23 +14,29 @@ const Profile = () => {
     const { friendIdx, friendName, imageUrl } = queryString
     const [isOpen, setIsOpen] = useState(false)
     const alertContext = useContext(AlertContext)
+    const { idx } = jwt.decode(localStorage.jwt)
     const history = useHistory()
 
     const openChat = async (e) => {
         e.stopPropagation()
         setIsOpen(true)
-        const { idx } = jwt.decode(localStorage.jwt)
+        if (+idx === +friendIdx) {
+            setIsOpen(false)
+            return
+        }
         const response = await API_accessPersonalRoom({
             userIdx: idx,
             friendIdx,
         })
         if (happenApiError(response, alertContext)) {
             setIsOpen(false)
+            return
         }
         const { roomIdx, roomName } = response.data.result
         const getUserNameResponse = await API_getUserInfo()
         if (happenApiError(response, alertContext)) {
             setIsOpen(false)
+            return
         }
         const { name } = getUserNameResponse.data.result
         history.push(
@@ -57,10 +63,15 @@ const Profile = () => {
                     <div className="chat_button_wrap" onClick={openChat}>
                         {isOpen ? (
                             <CircularProgress size={36} />
+                        ) : +idx !== +friendIdx ? (
+                            <>
+                                <div className="icon chat"></div>
+                                <p>1:1 채팅</p>
+                            </>
                         ) : (
                             <>
-                                <div className="chat_icon"></div>
-                                <p>1:1 채팅</p>
+                                <div className="icon edit"></div>
+                                <p>프로필 관리</p>
                             </>
                         )}
                     </div>

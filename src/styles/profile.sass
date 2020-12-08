@@ -42,12 +42,19 @@
             display: flex
             justify-content: center
             align-items: center
-            .chat_icon
+            .icon
                 width: 36px
                 height: 36px
                 background-position: 50%
                 background-repeat: no-repeat
                 background-size: cover
-                background-image: url("../assets/icons/chat.svg")
                 &:hover
                     filter: invert(0.4)
+                &.chat
+                    background-image: url("../assets/icons/chat.svg")
+                &.edit
+                    width: 28px
+                    height: 28px
+                    background-image: url("../assets/icons/edit.svg")
+                &.edit + p
+                    margin-top: 6px

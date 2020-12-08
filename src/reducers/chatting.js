@@ -8,6 +8,24 @@ const chattingReducer = {
             }
         )
     },
+    FETCH_CHATTING_ROOM_INFO: (state, action) => {
+        return Object.assign(
+            {},
+            state,
+            {
+                info: action.payload
+            }
+        )
+    },
+    FETCH_PARTICIPANT_LIST: (state, action) => {
+        return Object.assign(
+            {},
+            state,
+            {
+                participants: action.payload
+            }
+        )
+    },
     FETCH_CHATTING_ROOM_LIST_SUCCESS: (state, action) => {
         return Object.assign(
             {},
