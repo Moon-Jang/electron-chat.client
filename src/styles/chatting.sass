@@ -75,6 +75,22 @@
                     height: 400px
                     background-color: green
                     transition: all .35s
+                    .title
+                        display: flex
+                        align-items: center
+                        height: 40px
+                        background: red
+                        p
+                            padding-left: 12px
+                            font-weight: bold
+                    .description
+                        dl
+                            display: grid
+                            grid-template-columns: 1fr 1fr
+                            dt
+                                margin: 0
+                    .participant_list
+                    .button_wrap
     .chatting_area
         flex: 1
         display: flex
@@ -132,7 +148,7 @@
                         border-radius: 8px
                         padding: 12px 6px
                         color: white
-                        font-weight: bolder
+                        font-weight: bold
                     .time
                         padding-left: 4px
             &.message.me
@@ -149,7 +165,7 @@
                         border-radius: 8px
                         padding: 12px 6px
                         color: white
-                        font-weight: bolder
+                        font-weight: bold
                     .time
                         justify-content: flex-end
                         padding-right: 4px

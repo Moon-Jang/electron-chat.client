@@ -30,11 +30,32 @@ const Header = (props) => {
                         <span></span>
                         <span></span>
                     </label>
-                    <div className="menu_wrap"></div>
+                    <Menu />
                 </div>
             </div>
         </div>
     )
 }
 
+const Menu = () => {
+    return (
+        <div className="menu_wrap">
+            <div className="title">
+                <p>채팅방정보</p>
+            </div>
+            <div className="description">
+                <dl>
+                    <dt>방제</dt>
+                    <dd>방제목입니다</dd>
+                    <dt>고유코드</dt>
+                    <dd>RRRRRRRRRR</dd>
+                    <dt>비밀번호</dt>
+                    <dd>없음</dd>
+                </dl>
+            </div>
+            <div className="participant_list"></div>
+            <div className="button_wrap"></div>
+        </div>
+    )
+}
 export default Header
