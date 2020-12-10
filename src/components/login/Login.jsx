@@ -1,46 +1,76 @@
 import { Button, CircularProgress, TextField } from "@material-ui/core"
-import React from "react"
+import React, { useContext, useEffect } from "react"
 import { useState } from "react"
 import { useHistory } from "react-router-dom"
 import { API_login } from "../../api"
 import BasicLayout from "../../layout/BasicLayout"
-import { happenApiError } from "../../util"
+import { alertDialog, happenApiError } from "../../util"
+import { AlertContext } from "../router"
+import API from "../../api/API"
+import jwt from "jsonwebtoken"
 import logo from "../../assets/logo/logo.svg"
 import "../../styles/login.sass"
 import "../../styles/App.css"
+
 const Login = () => {
     const history = useHistory()
     const [isLogin, setIsLogin] = useState(false)
+    const alertContext = useContext(AlertContext)
     const [loginData, setLoginData] = useState({
         id: "",
         password: "",
     })
     const { id, password } = loginData
 
+    useEffect(() => {
+        if (history.action === "PUSH") {
+            history.go(0)
+        }
+    }, []) //eslint-disable-line
     const handleChange = (e) => {
         const { name, value } = e.target
         setLoginData({ ...loginData, [name]: value })
     }
     const moveToSignup = () => history.push("/signup")
+
+    const handleInputKeyUp = (e) => {
+        if (e.key === "Enter") {
+            login()
+        }
+    }
     const login = async () => {
+        if (!id) {
+            alertDialog(alertContext, "아이디를 입력해주세요.")
+            return
+        }
+        if (!password) {
+            alertDialog(alertContext, "비밀번호를 입력해주세요.")
+            return
+        }
         setIsLogin(true)
         const response = await API_login({ id, password })
-        if (happenApiError(response, null, true)) {
+        if (happenApiError(response, alertContext, null, true)) {
             setIsLogin(false)
             return
         }
-        setIsLogin(false)
+        const decoded = jwt.decode(response.data.token)
+        console.log(decoded)
+        if (typeof decoded !== "string") {
+            localStorage.jwt = response.data.token
+            API.defaults.headers["Authorization"] = `Bearer ${localStorage.jwt}`
+        }
+        history.push("/main/friend")
     }
     return (
-        <BasicLayout name={"로그인"}>
-            <div class="login_page">
-                <div class="logo_wrap">
+        <BasicLayout>
+            <div className="login_page">
+                <div className="logo_wrap">
                     <img src={logo} className={"App-logo"} alt={"logo"} />
                 </div>
-                <div class="main_contents">
-                    <div class="white_space" />
-                    <div class="login_form">
-                        <div class="input_wrap">
+                <div className="main_contents">
+                    <div className="white_space" />
+                    <div className="login_form">
+                        <div className="input_wrap">
                             <TextField
                                 id="id"
                                 name="id"
@@ -57,9 +87,10 @@ const Login = () => {
                                 variant="outlined"
                                 value={password}
                                 onChange={handleChange}
+                                onKeyUp={handleInputKeyUp}
                             />
                         </div>
-                        <div class="button_wrap">
+                        <div className="button_wrap">
                             <Button
                                 id="signupButton"
                                 variant="contained"
@@ -79,9 +110,9 @@ const Login = () => {
                             </Button>
                         </div>
                     </div>
-                    <div class="white_space" />
+                    <div className="white_space" />
                 </div>
-                <div class="white_space" />
+                <div className="white_space" />
             </div>
         </BasicLayout>
     )

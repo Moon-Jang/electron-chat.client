@@ -4,7 +4,7 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack"
 const Navigation = ({ history }) => {
     const goBack = () => history.goBack()
     return (
-        <div class="navigation_area">
+        <div className="navigation_area">
             <IconButton onClick={goBack}>
                 <ArrowBackIcon />
             </IconButton>

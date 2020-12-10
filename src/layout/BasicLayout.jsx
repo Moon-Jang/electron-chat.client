@@ -1,5 +1,5 @@
 import React from "react"
-const BasicLayout = ({ name, children }) => {
+const BasicLayout = ({ children }) => {
     return (
         <div className={"layout basic_layout"}>
             <main>{children}</main>

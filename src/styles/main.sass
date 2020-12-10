@@ -1,0 +1,284 @@
+.main_page
+    display: flex
+    flex-direction: column
+    height: 100vh
+    .navigation_area
+        flex: 1
+        max-height: 54px
+        display: flex
+        border-top: 1px solid rgba(0, 0, 0,0.5 )
+        border-bottom: 1px solid rgba(0, 0, 0,0.5 )
+        button
+            flex: 1
+            border: 0
+            font-size: 1.25em
+            cursor: pointer
+            &:hover
+                opacity: 0.7
+        #navigationFriendButton
+            border-right: 1px solid rgba(0, 0, 0,0.5 )
+        #navigationChatButton
+        .selected
+            background-color: rgba(0, 0, 0,0.5 )
+            color: white
+    .search_area
+        flex: 1
+        max-height: 54px
+        display: flex
+        align-items: flex-end
+        justify-content: center
+        .inputWrap
+            background-color: white
+            border: 1px solid rgba(0, 0, 0,0.4 )
+            border-radius: 26px
+            height: 65%
+            width: 90%
+            margin: 0 auto
+            display: flex
+            align-items: center
+            .icon
+                filter: invert(0.4)
+                background-position: 50%
+                background-repeat: no-repeat
+                background-size: cover
+                width: 24px
+                height: 24px
+                margin-left: 12px
+            input
+                border: 0
+                width: 84%
+                height: 90%
+                padding: 0
+                padding-left: 8px
+                font-size: 1.2em
+                margin: 0
+        &.chat
+            border-bottom: 1px solid rgba(0,0,0,0.3)
+            padding-bottom: 18px
+    .main_contents
+        flex: 9
+        overflow-y: auto
+        display: flex
+        flex-direction: column
+        .my_profile_wrap
+            background-color: white
+            display: flex
+            align-items: center
+            justify-content: center
+            width: 100%
+            height: 100px
+            .profile
+                display: flex
+                width: 90%
+                height: 100%
+                align-items: center
+                border-bottom: 1px solid rgba(0,0,0,0.4)
+                .profile_image
+                    height: 46px
+                    width: 48px
+                    border-radius: 12px
+                    border: 1px solid rgba(0,0,0,0.3)
+                    background-position: 50%
+                    background-repeat: no-repeat
+                    background-size: cover
+                    cursor: pointer
+                .name
+                    display: flex
+                    align-items: center
+                    height: 100%
+                    width: 100px
+                    padding-left: 12px
+                    font-size: 1.25em
+                    font-weight: bold
+                .whitespace
+                    flex: 1
+        .friend_profile_wrap
+            flex: 1
+            display: flex
+            flex-direction: column
+            width: 100%
+            align-items: center
+            margin-top: 20px
+            .profile
+                height: 60px
+                display: flex
+                width: 90%
+                padding-left: 5%
+                padding-right: 5%
+                align-items: center
+                &.selected
+                    background-color: rgba(0,0,0,0.2)
+                &:hover
+                    background-color: rgba(0,0,0,0.1)
+                .profile_image
+                    height: 40px
+                    width: 40px
+                    border-radius: 12px
+                    border: 1px solid rgba(0,0,0,0.3)
+                    background-position: 50%
+                    background-repeat: no-repeat
+                    background-size: cover
+                    cursor: pointer
+                .name
+                    display: flex
+                    align-items: center
+                    height: 100%
+                    width: 100px
+                    padding-left: 12px
+                    font-size: 1.25em
+                    font-weight: bold
+                .whitespace
+                    flex: 1
+        .chatting_room_wrap
+            display: flex
+            flex-direction: column
+            .chatting_room
+                height: 68px
+                display: flex
+                align-items: center
+                width: 90%
+                padding-left: 5%
+                padding-right: 5%
+                border-bottom: 1px solid rgba(0,0,0,0.3)
+                cursor: pointer
+                &:hover
+                    background-color: rgba(0,0,0,0.1)
+                .profile_image_wrap
+                    height: 100%
+                    width: 48px
+                    display: flex
+                    align-items: center
+                    justify-content: center
+                    position: relative
+                    .profile_image
+                        height: 40px
+                        width: 40px
+                        border-radius: 12px
+                        border: 1px solid rgba(0,0,0,0.3)
+                        background-position: 50%
+                        background-repeat: no-repeat
+                        background-size: cover
+                    .profile_image_multiple
+                        position: absolute
+                        border-radius: 8px
+                        border: 1px solid rgba(0,0,0,0.3)
+                        background-position: 50%
+                        background-repeat: no-repeat
+                        background-size: cover
+                        background-color: #fff
+                .name
+                    display: flex
+                    align-items: center
+                    padding-left: 12px
+                    font-size: 1.25em
+                    font-weight: bold
+                .participants_number
+                    padding-left: 4px
+                    padding-top: 4px
+                .whitespace
+
+        .add_friend_overlay
+            position: fixed
+            top: 0
+            width: 100%
+            height: 100vh
+            z-index: 990
+            background-color: rgba(0,0,0,0.3)
+            display: flex
+            justify-content: center
+            align-items: center
+            .add_friend_wrap
+                display: flex
+                flex-direction: column
+                width: 304px
+                height: 464px
+                z-index: 991
+                background-color: #fff
+                box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4)
+                -webkit-background-clip: padding-box
+                -moz-background-clip: padding-box
+                .header
+                    display: flex
+                    position: relative
+                    height: 60px
+                    align-items: center
+                    border-bottom: 1px solid rgba(0, 0, 0,0.3 )
+                    p
+                        padding-left: 20px
+                        font-size: 16px
+                        font-weight: bold
+                    button
+                        position: absolute
+                        top: 0
+                        right: 0
+                .search_wrap
+                    display: flex
+                    height: 60px
+                    align-items: center
+                    justify-content: center
+                    .inputWrap
+                        background-color: white
+                        border: 1px solid rgba(0, 0, 0,0.4 )
+                        border-radius: 26px
+                        height: 26px
+                        width: 90%
+                        margin: 0 auto
+                        display: flex
+                        align-items: center
+                        .icon
+                            filter: invert(0.4)
+                            background-position: 50%
+                            background-repeat: no-repeat
+                            background-size: cover
+                            width: 18px
+                            height: 18px
+                            margin-left: 8px
+                        input
+                            border: 0
+                            width: 84%
+                            height: 90%
+                            padding: 0
+                            padding-left: 8px
+                            font-size: 14px
+                            margin: 0
+                .friend_profile_wrap
+                    flex: 1
+                    overflow-y: auto
+                    margin-top: 0
+                    margin-bottom: 10px
+                    position: relative
+                    cursor: pointer
+                    .profile
+                        height: 48px
+                        .profile_image
+                            height: 28px
+                            width: 28px
+                        .name
+                            font-size: 14px
+                        .id
+                            position: absolute
+                            right: 24px
+                .add_button_wrap
+                    display: flex
+                    height: 40px
+                    flex-direction: row-reverse
+                    padding-bottom: 20px
+                    padding-right: 20px
+                    .MuiButton-root
+                        padding: 0
+                    button
+                        height: 36px
+                        width: 84px
+                        border: 0
+                        border-radius: 6px
+                        background-color: rgba(0,0,0,0.3)
+                        span
+                            font-weight: bold
+    .MuiSpeedDial-root
+        right: 24px !important
+        bottom: 24px !important
+        z-index: 899
+        .MuiSpeedDial-fab
+            background-color: rgb(169,169,169)
+            &:hover
+                background-color: rgb(128,128,128)

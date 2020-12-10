@@ -21,6 +21,7 @@ $success: #E8F0FE
         @content
 
 html, body
+    overflow: hidden
     color: $black
     font-size: 14px
     scroll-behavior: smooth
@@ -41,3 +42,30 @@ html, body
     .basic_layout
         main
             flex: 1
+
+*:not([type=password])
+    font-family: 'Noto Sans KR', sans-serif
+    font-weight: 300
+p
+    margin: 0
+*:focus
+    outline: 0 !important
+
+.MuiBackdrop-root
+    background-color: rgba(0, 0, 0, 0.2) !important
+
+/* width */
+::-webkit-scrollbar
+    width: 10px
+
+/* Track */
+::-webkit-scrollbar-track
+    border-radius: 10px
+
+/* Handle */
+::-webkit-scrollbar-thumb
+    background-color: rgba(0, 0, 0,0.3 )
+    border-radius: 10px
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover

@@ -1,0 +1,259 @@
+.chatting_page
+    display: flex
+    flex-direction: column
+    height: 100vh
+    .header_area
+        display: flex
+        height: 48px
+        border-bottom: 1px solid rgba(0,0,0,0.3)
+        .chatting_room_name_wrap
+            display: flex
+            flex: 6
+            align-items: center
+            span
+                font-size: 16px
+                overflow: hidden
+                text-overflow: ellipsis
+                display: -webkit-box
+                -webkit-line-clamp: 1
+                -webkit-box-orient: vertical
+                word-wrap: break-word
+                line-height: 1.2em
+                height: 1.2em
+                padding-left: 20px
+        .white_space
+            flex: 1
+        .hamburger_wrap
+            display: flex
+            width: 56px
+            align-items: center
+            justify-content: center
+            .hamburger
+                position: relative
+                width: 18px
+                height: 18px
+                input
+                    display: none
+                #hamburgerInput
+                    &:checked + label
+                        span
+                            &:nth-child(1)
+                                top: 50%
+                                transform: translateY(-50%) rotate(45deg)
+                            &:nth-child(2)
+                                opacity: 0
+                            &:nth-child(3)
+                                bottom: 50%
+                                transform: translateY(50%) rotate(-45deg)
+                    &:checked + label + div
+                        right: 16px
+                #hamburgerInput + label
+                    position: absolute
+                    width: 100%
+                    height: 100%
+                    cursor: pointer
+                    span
+                        display: block
+                        position: absolute
+                        width: 100%
+                        height: 2px
+                        border-radius: 30px
+                        background-color: #000
+                        transition: all .35s
+                        &:nth-child(1)
+                            top: 0
+                        &:nth-child(2)
+                            top: 50%
+                            transform: translateY(-50%)
+                        &:nth-child(3)
+                            bottom: 0
+                .menu_wrap
+                    position: fixed
+                    top: 39px
+                    right: -210px
+                    width: 200px
+                    height: 432px
+                    background-color: #fff
+                    border: 1px solid rgba(0,0,0,0.3)
+                    transition: all .35s
+                    .title
+                        display: flex
+                        align-items: center
+                        height: 40px
+                        border-bottom: 1px solid rgba(0,0,0,0.3)
+                        h4
+                            margin: 0
+                            padding-left: 12px
+                            font-weight: bold
+                            color: green
+                    .description
+                        dl
+                            display: grid
+                            grid-template-columns: 60px 1fr
+                            margin: 0 8px
+                            font-size: 12px
+                            padding: 16px 8px
+                            row-gap: 8px
+                            border-bottom: 1px solid rgba(0,0,0,0.3)
+                            dd
+                                color: green
+                                margin: 0
+                            dt
+                    .participant_list
+                        height: 148px
+                        margin: 0 8px
+                        padding: 16px 8px
+                        border-bottom: 1px solid rgba(0,0,0,0.3)
+                        overflow-y: auto
+                        &::-webkit-scrollbar
+                            width: 6px
+                        .profile
+                            display: flex
+                            align-items: center
+                            height: 28px
+                            margin-bottom: 12px
+                            padding: 0 12px
+                            .profile_image
+                                height: 24px
+                                width: 24px
+                                border: 1px solid rgba(0,0,0,0.3)
+                                border-radius: 6px
+                                background-position: 50%
+                                background-repeat: no-repeat
+                                background-size: cover
+                            .name
+                                font-size: 12px
+                                padding-left: 8px
+                    .button_wrap
+                        margin: 0 8px
+                        padding: 8px 8px
+                        .button
+                            display: flex
+                            align-items: center
+                            padding-left: 8px
+                            margin-bottom: 8px
+                            button
+                                height: 24px
+                                width: 24px
+                            label
+                                font-size: 12px
+                                padding-left: 8px
+                                cursor: pointer
+
+    .chatting_area
+        flex: 1
+        display: flex
+        flex-direction: column
+        overflow-y: auto
+        .chat_wrap
+            padding: 10px
+            padding-left: 16px
+            &.system
+                display: flex
+                .message_wrap
+                    display: flex
+                    width: 100%
+                    align-items: center
+                    span
+                        display: block
+                    .message
+                        padding: 0 4px
+                    .bar
+                        flex: 1
+                        border-top: 1px solid rgba(0,0,0,0.3)
+                        height: 1px
+            &.message
+                .message_wrap
+                    .time
+                        width: 72px
+                        min-width: 72px
+                        display: flex !important
+                        align-items: flex-end
+                        font-size: 11px
+            &.message.other
+                .profile_wrap
+                    display: flex
+                    align-items: center
+                    .profile_image
+                        width: 40px
+                        height: 40px
+                        border-radius: 10px
+                        background-position: 50%
+                        border: 1px solid rgba(0,0,0,0.3)
+                        background-repeat: no-repeat
+                        background-size: cover
+                        background-color: #fff
+                    p
+                        margin-left: 8px
+                .message_wrap
+                    display: flex
+                    span
+                        display: block
+                    .white_space
+                        width: 44px
+                        min-width: 44px
+                    .message
+                        background-color: rgba(0,0,0,0.3)
+                        border: 0px
+                        border-radius: 8px
+                        padding: 12px 6px
+                        color: white
+                        font-weight: bold
+                    .time
+                        padding-left: 4px
+            &.message.me
+                .message_wrap
+                    display: flex
+                    flex-direction: row-reverse
+                    span
+                        display: block
+                    .white_space
+                        min-width: 25%
+                    .message
+                        background-color: rgba(0,0,0,0.3)
+                        border: 0px
+                        border-radius: 8px
+                        padding: 12px 6px
+                        color: white
+                        font-weight: bold
+                    .time
+                        justify-content: flex-end
+                        padding-right: 4px
+    .input_area
+        display: flex
+        height: 72px
+        align-items: center
+        padding: 0 8px
+        border-top: 1px solid rgba(0,0,0,0.3)
+        >*
+            height: 36px
+            margin-right: 8px
+        .icon
+            width: 24px
+            height: 24px
+            cursor: pointer
+            &.emoticon
+                background-image: url("../assets/icons/emoticon.svg")
+            &.attachment
+                background-image: url("../assets/icons/attachment.svg")
+            &.picture
+                background-image: url("../assets/icons/picture.svg")
+        .input_message
+            flex: 1
+            height: 25%
+            border: 1px solid rgba(0,0,0,0.3)
+            border-radius: 10px
+            -moz-appearance: none
+            outline: 0px none transparent
+            padding: 10px 10px
+            font-size: 12px
+            resize: none
+            &::-webkit-scrollbar
+                width: 6px
+        #send_button
+            width: 42px
+            border: 0
+            background-color: rgba(0,0,0,0.3)
+            border-radius: 10px
+            color: #fff
+            cursor: pointer
