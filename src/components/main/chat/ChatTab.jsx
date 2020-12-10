@@ -1,7 +1,7 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import SpeedDials from "../../common/SpeedDials"
 import ExitToAppIcon from "@material-ui/icons/ExitToApp"
-import PersonAddIcon from "@material-ui/icons/PersonAdd"
+import AddCommentOutlinedIcon from "@material-ui/icons/AddCommentOutlined"
 import { useHistory } from "react-router-dom"
 import { createNewWindow } from "../../../util"
 import { useDispatch, useSelector, useStore } from "react-redux"
@@ -9,14 +9,16 @@ import { fetchChattingRoomList } from "../../../actions/mainAction"
 
 const ChatTab = () => {
     const history = useHistory()
+    const keywordState = useState("")
+    const [keyword] = keywordState
     if (history.action === "POP") {
         history.replace("/main/friend")
         return <></>
     }
     const actions = [
         {
-            icon: <PersonAddIcon />,
-            name: "친구추가",
+            icon: <AddCommentOutlinedIcon />,
+            name: "채팅방 생성",
             onClick: () => {},
         },
         {
@@ -28,23 +30,46 @@ const ChatTab = () => {
             },
         },
     ]
+
     return (
         <>
-            <div className="search_area chat">
-                <div className="inputWrap">
-                    <div className="icon search_icon" />
-                    <input id="keyword" type="text" autoComplete="off" />
-                </div>
-            </div>
+            <Search keywordState={keywordState} />
             <div className="main_contents">
-                <ChattingRoomWrap />
+                <ChattingRoomWrap keyword={keyword} />
             </div>
             <SpeedDials actions={actions} />
         </>
     )
 }
-
-const ChattingRoomWrap = () => {
+const Search = ({ keywordState }) => {
+    const [keyword, setKeyword] = keywordState
+    const handleChange = (e) => {
+        let { value } = e.target
+        // eslint-disable-next-line
+        const reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi
+        if (reg.test(value)) {
+            value = value.replace(reg, "")
+        }
+        setKeyword(value)
+    }
+    return (
+        <div className="search_area chat">
+            <div className="inputWrap">
+                <div className="icon search_icon" />
+                <input
+                    id="keyword"
+                    type="text"
+                    value={keyword}
+                    onChange={handleChange}
+                    placeholder="채팅방 검색"
+                    autoComplete="off"
+                />
+            </div>
+        </div>
+    )
+}
+const ChattingRoomWrap = (props) => {
+    const { keyword } = props
     const { user } = useStore().getState()
     const { info } = user
     const chattingRoomList = useSelector((store) => store.chatting.rooms)
@@ -53,16 +78,27 @@ const ChattingRoomWrap = () => {
         dispatch(fetchChattingRoomList())
     }, []) //eslint-disable-line
 
-    //eslint-disable-next-line
-    const chattingRooms =
-        chattingRoomList &&
-        chattingRoomList.map((el) => (
-            <ChattingRoom key={el.idx} userName={info.name} {...el} />
-        ))
-
+    const renderChattingRoom = () => {
+        if (!chattingRoomList) {
+            return
+        }
+        if (!keyword) {
+            return chattingRoomList.map((el) => (
+                <ChattingRoom key={el.idx} userName={info.name} {...el} />
+            ))
+        }
+        const regExp = new RegExp(keyword)
+        return chattingRoomList
+            .filter((room) => room.name.match(regExp))
+            .map((el) => (
+                <ChattingRoom key={el.idx} userName={info.name} {...el} />
+            ))
+    }
     return (
         <div className="chatting_room_wrap">
-            {chattingRoomList && chattingRooms}
+            {chattingRoomList !== false
+                ? renderChattingRoom()
+                : "서버의 오류로 채팅방 목록을 받아오지 못했습니다.\n다시 시도해주세요"}
         </div>
     )
 }
@@ -95,7 +131,10 @@ const ChattingRoom = (props) => {
                     <div
                         className="profile_image"
                         style={{
-                            backgroundImage: `url(${participants[0].profileImageUrl})`,
+                            backgroundImage: `url(${
+                                participants.length &&
+                                participants[0].profileImageUrl
+                            })`,
                         }}
                     />
                 </div>

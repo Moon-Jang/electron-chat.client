@@ -26,6 +26,7 @@ const ChattingRoom = (props) => {
             <WebSocketComponent roomIdx={roomIdx} userName={userName}>
                 <div className="chatting_page" onClick={clearView}>
                     <Header
+                        roomIdx={roomIdx}
                         roomName={roomName}
                         userName={userName}
                         isPersonal={isPersonal}

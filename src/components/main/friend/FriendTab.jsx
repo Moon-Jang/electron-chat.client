@@ -10,7 +10,23 @@ import { createNewWindow } from "../../../util"
 
 const FriendTab = () => {
     const history = useHistory()
+    const keywordState = useState("")
+    const [keyword] = keywordState
     const visibleState = useState(false)
+    const ipcRenderer = window.require && window.require("electron").ipcRenderer
+
+    useEffect(() => {
+        receiveDeleteFriendMessage()
+    }, []) //eslint-disable-line
+
+    const receiveDeleteFriendMessage = () => {
+        console.log("ipcRenderer", ipcRenderer)
+        if (ipcRenderer) {
+            ipcRenderer.once("delete-friend-success", (event, arg) => {
+                console.log(arg)
+            })
+        }
+    }
     const actions = [
         {
             icon: <PersonAddIcon />,
@@ -26,21 +42,45 @@ const FriendTab = () => {
             },
         },
     ]
+
     return (
         <>
-            <div className="search_area">
-                <div className="inputWrap">
-                    <div className="icon search_icon" />
-                    <input id="keyword" type="text" autoComplete="off" />
-                </div>
-            </div>
+            <Search keywordState={keywordState} />
             <div className="main_contents">
                 <MyProfileWrap />
-                <FriendProfileWrap />
+                <FriendProfileWrap keyword={keyword} />
                 <AddFriendModal visibleState={visibleState} />
             </div>
             <SpeedDials actions={actions} />
         </>
+    )
+}
+const Search = ({ keywordState }) => {
+    const [keyword, setKeyword] = keywordState
+
+    const handleChange = (e) => {
+        let { value } = e.target
+        // eslint-disable-next-line
+        const reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi
+        if (reg.test(value)) {
+            value = value.replace(reg, "")
+        }
+        setKeyword(value)
+    }
+    return (
+        <div className="search_area">
+            <div className="inputWrap">
+                <div className="icon search_icon" />
+                <input
+                    id="keyword"
+                    type="text"
+                    value={keyword}
+                    onChange={handleChange}
+                    placeholder="이름 검색"
+                    autoComplete="off"
+                />
+            </div>
+        </div>
     )
 }
 const MyProfileWrap = () => {
@@ -81,7 +121,8 @@ const Profile = (props) => {
     )
 }
 
-const FriendProfileWrap = () => {
+const FriendProfileWrap = (props) => {
+    const { keyword } = props
     const friendList = useSelector((store) => store.user.friendList)
     const dispatch = useDispatch()
 
@@ -91,18 +132,33 @@ const FriendProfileWrap = () => {
         }
     }, []) //eslint-disable-line
 
-    const friendProfiles =
-        friendList &&
-        friendList.map((el) => {
-            return (
+    const renderFriendProfiles = () => {
+        if (!friendList) {
+            return
+        }
+        if (!keyword) {
+            return friendList.map((el) => {
+                return (
+                    <Profile
+                        key={el.idx}
+                        imageUrl={el.profile_image_url}
+                        {...el}
+                    />
+                )
+            })
+        }
+        const regExp = new RegExp(keyword)
+        return friendList
+            .filter((friend) => friend.name.match(regExp))
+            .map((el) => (
                 <Profile key={el.idx} imageUrl={el.profile_image_url} {...el} />
-            )
-        })
+            ))
+    }
 
     return (
         <div className="friend_profile_wrap">
-            {friendProfiles !== false
-                ? friendProfiles
+            {friendList !== false
+                ? renderFriendProfiles()
                 : "서버의 오류로 친구목록을 받아오지 못했습니다.\n다시 시도해주세요"}
             <div className="profile">
                 <div className="profile_image person_icon"></div>

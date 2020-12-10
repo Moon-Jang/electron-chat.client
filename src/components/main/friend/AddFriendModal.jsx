@@ -64,6 +64,7 @@ const SearchWrap = ({ visible }) => {
                 <input
                     id="searchFriendKeyword"
                     type="text"
+                    placeholder="이름, 아이디 검색"
                     value={keyword}
                     onChange={handleChange}
                     autoComplete="off"

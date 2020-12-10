@@ -156,3 +156,8 @@ export function createNewWindow(url) {
     win.setMenuBarVisibility(false)
     win.loadURL(url)
 }
+
+export async function closeWindow() {
+    const remote = window.require("electron").webFrame.context
+    remote.close()
+}

@@ -9,7 +9,13 @@ const fetchParticipantList = (roomIdx) => ({
     type: types.FETCH_PARTICIPANT_LIST_REQUEST,
     payload: { roomIdx }
 })
+
+const exitRoom = (userIdx) => ({
+    type: types.EXIT_ROOM,
+    payload: { userIdx }
+})
 export {
     fetchConversation,
-    fetchParticipantList
+    fetchParticipantList,
+    exitRoom
 }

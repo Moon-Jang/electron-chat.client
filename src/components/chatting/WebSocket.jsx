@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react"
 import { useDispatch } from "react-redux"
-import { fetchConversation } from "../../actions/chattingAction"
+import { exitRoom, fetchConversation } from "../../actions/chattingAction"
 import {
     FETCH_CHATTING_ROOM_INFO,
     FETCH_PARTICIPANT_LIST,
@@ -23,7 +23,7 @@ const WebSocketComponent = (props) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        setupSocket()
+        setupSocket(socket)
         return () => {
             //willUnMount.current = true
             //connectionCnt.current = MAX_CONNECTION_CNT
@@ -32,13 +32,13 @@ const WebSocketComponent = (props) => {
         //eslint-disable-next-line
     }, [socket])
 
-    const setupSocket = () => {
+    const setupSocket = (socket) => {
         socket.onopen = function (event) {
             console.log("Websocket connect Success")
             const payload = {
                 action: "init",
             }
-            setTimeout(() => socket.send(JSON.stringify(payload)), 100)
+            setTimeout(() => socket.send(JSON.stringify(payload)), 250)
         }
         socket.onmessage = function (event) {
             console.log("event", event)
@@ -80,6 +80,11 @@ const WebSocketComponent = (props) => {
             } else if (routeKey === "sendMessage") {
                 const conversation = JSON.parse(payload.conversation)
                 dispatch(fetchConversation(conversation))
+            } else if (routeKey === "exitRoom") {
+                const conversation = JSON.parse(payload.conversation)
+                const { exitedUser } = payload
+                dispatch(exitRoom(exitedUser))
+                dispatch(fetchConversation(conversation))
             }
         }
 
@@ -100,7 +105,7 @@ const WebSocketComponent = (props) => {
                 setTimeout(() => {
                     setSocket(
                         new WebSocket(
-                            `ws://localhost:3001?roomIdx=${roomIdx}&userName=${userName}&jwt=${localStorage.jwt}`
+                            `ws://localhost:3001?roomIdx=${roomIdx}&userName=${userName}&jwt=${localStorage.jwt}&n=${connectionCnt.current}`
                             // "wss://nsi43m46q1.execute-api.ap-northeast-2.amazonaws.com/prod" +
                             //     `?roomIdx=${roomIdx}&userName=${userName}`
                         )

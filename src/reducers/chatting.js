@@ -62,6 +62,19 @@ const chattingReducer = {
             }
         )
     },
+    EXIT_ROOM: (state, action) => {
+        const { userIdx } = action.payload
+        const exitedUser = state.participants.find( el => el.idx === userIdx )
+        exitedUser.isExited = "Y"
+        console.log("participants",state.participants)
+        return Object.assign(
+            {},
+            state,
+            {
+                participants: [...state.participants]
+            }
+        )
+    },
 }
 const reducer = (state = {}, action) => {
     if(chattingReducer[action.type] === undefined) {

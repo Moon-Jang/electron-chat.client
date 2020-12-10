@@ -46,7 +46,7 @@
                                 bottom: 50%
                                 transform: translateY(50%) rotate(-45deg)
                     &:checked + label + div
-                        right: 10px
+                        right: 16px
                 #hamburgerInput + label
                     position: absolute
                     width: 100%
@@ -70,27 +70,76 @@
                 .menu_wrap
                     position: fixed
                     top: 39px
-                    right: -200px
+                    right: -210px
                     width: 200px
-                    height: 400px
-                    background-color: green
+                    height: 432px
+                    background-color: #fff
+                    border: 1px solid rgba(0,0,0,0.3)
                     transition: all .35s
                     .title
                         display: flex
                         align-items: center
                         height: 40px
-                        background: red
-                        p
+                        border-bottom: 1px solid rgba(0,0,0,0.3)
+                        h4
+                            margin: 0
                             padding-left: 12px
                             font-weight: bold
+                            color: green
                     .description
                         dl
                             display: grid
-                            grid-template-columns: 1fr 1fr
-                            dt
+                            grid-template-columns: 60px 1fr
+                            margin: 0 8px
+                            font-size: 12px
+                            padding: 16px 8px
+                            row-gap: 8px
+                            border-bottom: 1px solid rgba(0,0,0,0.3)
+                            dd
+                                color: green
                                 margin: 0
+                            dt
                     .participant_list
+                        height: 148px
+                        margin: 0 8px
+                        padding: 16px 8px
+                        border-bottom: 1px solid rgba(0,0,0,0.3)
+                        overflow-y: auto
+                        &::-webkit-scrollbar
+                            width: 6px
+                        .profile
+                            display: flex
+                            align-items: center
+                            height: 28px
+                            margin-bottom: 12px
+                            padding: 0 12px
+                            .profile_image
+                                height: 24px
+                                width: 24px
+                                border: 1px solid rgba(0,0,0,0.3)
+                                border-radius: 6px
+                                background-position: 50%
+                                background-repeat: no-repeat
+                                background-size: cover
+                            .name
+                                font-size: 12px
+                                padding-left: 8px
                     .button_wrap
+                        margin: 0 8px
+                        padding: 8px 8px
+                        .button
+                            display: flex
+                            align-items: center
+                            padding-left: 8px
+                            margin-bottom: 8px
+                            button
+                                height: 24px
+                                width: 24px
+                            label
+                                font-size: 12px
+                                padding-left: 8px
+                                cursor: pointer
+
     .chatting_area
         flex: 1
         display: flex
@@ -98,6 +147,7 @@
         overflow-y: auto
         .chat_wrap
             padding: 10px
+            padding-left: 16px
             &.system
                 display: flex
                 .message_wrap
@@ -196,8 +246,10 @@
             -moz-appearance: none
             outline: 0px none transparent
             padding: 10px 10px
-            font-size: 1em
+            font-size: 12px
             resize: none
+            &::-webkit-scrollbar
+                width: 6px
         #send_button
             width: 42px
             border: 0

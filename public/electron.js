@@ -1,5 +1,5 @@
  // Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
 const isDev = require('electron-is-dev')
 console.time("startup")
@@ -19,6 +19,11 @@ function createWindow () {
       enableRemoteModule: true,
       preload: path.join(__dirname, 'preload.js')
     }
+  })
+
+  ipcMain.on("delete-friend", (event,arg) => {
+    console.log(arg) 
+    mainWindow.webContents.send('delete-friend-success', "delete-friend-success")
   })
 
   // and load the index.html of the app.
