@@ -32,8 +32,8 @@ const ChattingRoom = (props) => {
                         userName={userName}
                         isPersonal={isPersonal}
                     />
-                    <Chatting userName={userName} />
-                    <Footer userName={userName} />
+                    <Chatting userName={userName} roomIdx={roomIdx} />
+                    <Footer userName={userName} roomIdx={roomIdx} />
                 </div>
             </WebSocketComponent>
         </BasicLayout>
