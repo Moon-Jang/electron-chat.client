@@ -1,3 +1,6 @@
+$bgColor: #3C465A
+$borderStyle: 1px solid rgba(255,255,255,0.3)
+$green: #46AF46
 .main_page
     display: flex
     flex-direction: column
@@ -13,13 +16,14 @@
             border: 0
             font-size: 1.25em
             cursor: pointer
+            background-color: transparent
             &:hover
                 opacity: 0.7
         #navigationFriendButton
             border-right: 1px solid rgba(0, 0, 0,0.5 )
         #navigationChatButton
         .selected
-            background-color: rgba(0, 0, 0,0.5 )
+            background-color: rgba(255, 255, 255,0.3 )
             color: white
     .search_area
         flex: 1
@@ -61,7 +65,7 @@
         display: flex
         flex-direction: column
         .my_profile_wrap
-            background-color: white
+            background-color: transparent
             display: flex
             align-items: center
             justify-content: center
@@ -176,7 +180,57 @@
                     padding-left: 4px
                     padding-top: 4px
                 .whitespace
-
+        .add_chatting_room_overlay
+            position: fixed
+            top: 0
+            width: 100%
+            height: 100vh
+            z-index: 990
+            background-color: rgba(0,0,0,0.3)
+            display: flex
+            justify-content: center
+            align-items: center
+            .add_chatting_room_wrap
+                display: flex
+                flex-direction: column
+                width: 304px
+                height: 464px
+                z-index: 991
+                border-radius: 2px
+                background-color: #fff
+                box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4)
+                -webkit-background-clip: padding-box
+                -moz-background-clip: padding-box
+                .header
+                    display: flex
+                    position: relative
+                    height: 60px
+                    align-items: center
+                    border-bottom: 1px solid rgba(0, 0, 0,0.3 )
+                    p
+                        padding-left: 20px
+                        font-size: 16px
+                        font-weight: bold
+                    button
+                        position: absolute
+                        top: 0
+                        right: 0
+                .add_button_wrap
+                    display: flex
+                    height: 40px
+                    flex-direction: row-reverse
+                    padding-bottom: 20px
+                    padding-right: 20px
+                    .MuiButton-root
+                        padding: 0
+                    button
+                        height: 36px
+                        width: 84px
+                        border: 0
+                        border-radius: 6px
+                        background-color: rgba(0,0,0,0.3)
+                        span
+                            font-weight: bold
         .add_friend_overlay
             position: fixed
             top: 0
@@ -193,6 +247,7 @@
                 width: 304px
                 height: 464px
                 z-index: 991
+                border-radius: 2px
                 background-color: #fff
                 box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4)
                 -webkit-background-clip: padding-box

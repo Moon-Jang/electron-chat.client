@@ -1,3 +1,6 @@
+$bgColor: #3C465A
+$borderStyle: 1px solid rgba(255,255,255,0.3)
+$green: #46AF46
 .chatting_page
     display: flex
     flex-direction: column
@@ -5,7 +8,7 @@
     .header_area
         display: flex
         height: 48px
-        border-bottom: 1px solid rgba(0,0,0,0.3)
+        border-bottom: $borderStyle
         .chatting_room_name_wrap
             display: flex
             flex: 6
@@ -58,7 +61,7 @@
                         width: 100%
                         height: 2px
                         border-radius: 30px
-                        background-color: #000
+                        background-color: rgba(255,255,255,0.8)
                         transition: all .35s
                         &:nth-child(1)
                             top: 0
@@ -74,19 +77,19 @@
                     width: 200px
                     z-index: 1
                     height: 432px
-                    background-color: #fff
-                    border: 1px solid rgba(0,0,0,0.3)
+                    background-color: $bgColor
+                    border: $borderStyle
                     transition: all .35s
                     .title
                         display: flex
                         align-items: center
                         height: 40px
-                        border-bottom: 1px solid rgba(0,0,0,0.3)
+                        border-bottom: $borderStyle
                         h4
                             margin: 0
                             padding-left: 12px
                             font-weight: bold
-                            color: green
+                            color: $green !important
                     .description
                         dl
                             display: grid
@@ -95,16 +98,16 @@
                             font-size: 12px
                             padding: 16px 8px
                             row-gap: 8px
-                            border-bottom: 1px solid rgba(0,0,0,0.3)
+                            border-bottom: $borderStyle
                             dd
-                                color: green
+                                color: $green !important
                                 margin: 0
                             dt
                     .participant_list
                         height: 148px
                         margin: 0 8px
                         padding: 16px 8px
-                        border-bottom: 1px solid rgba(0,0,0,0.3)
+                        border-bottom: $borderStyle
                         overflow-y: auto
                         &::-webkit-scrollbar
                             width: 6px
@@ -117,7 +120,7 @@
                             .profile_image
                                 height: 24px
                                 width: 24px
-                                border: 1px solid rgba(0,0,0,0.3)
+                                border: $borderStyle
                                 border-radius: 6px
                                 background-position: 50%
                                 background-repeat: no-repeat
@@ -161,16 +164,66 @@
                         padding: 0 4px
                     .bar
                         flex: 1
-                        border-top: 1px solid rgba(0,0,0,0.3)
+                        border-top: $borderStyle
                         height: 1px
             &.message
                 .message_wrap
+                    .message
+                        background-color: rgba(0,0,0,0.3)
+                        border: 0px
+                        border-radius: 8px
+                        padding: 8px 12px
+                        color: white
+                        font-weight: bold
+                        max-width: 63%
+                        word-break: break-all
                     .time
                         width: 72px
                         min-width: 72px
                         display: flex !important
                         align-items: flex-end
                         font-size: 11px
+                    .emoticon
+                        width: 80px
+                        height: 80px
+                        background-position: 50%
+                        background-repeat: no-repeat
+                        background-size: cover
+                    .image
+                        width: 200px
+                        height: 200px
+                        background-position: 50%
+                        background-repeat: no-repeat
+                        background-size: cover
+                    .file
+                        width: 100%
+                        background-color: transparent
+                        display: flex
+                        justify-content: center
+                        align-items: center
+                        cursor: pointer
+                        .svg_wrap
+                            display: flex
+                            min-width: 48px
+                            min-height: 48px
+                            border-radius: 100%
+                            border: $borderStyle
+                            justify-content: center
+                            align-items: center
+                            margin-left: 8px
+                            .MuiSvgIcon-root
+                                filter: invert(0.15)
+                                min-width: 36px
+                                min-height: 36px
+                        .file_name_wrap
+                            display: flex
+                            justify-content: flex-start
+                            align-items: center
+                            min-width: 156px
+                            padding: 0 8px
+                            padding-left: 12px
+                            a
+                                text-decoration: none
             &.message.other
                 .profile_wrap
                     display: flex
@@ -180,7 +233,7 @@
                         height: 40px
                         border-radius: 10px
                         background-position: 50%
-                        border: 1px solid rgba(0,0,0,0.3)
+                        border: $borderStyle
                         background-repeat: no-repeat
                         background-size: cover
                         background-color: #fff
@@ -193,13 +246,6 @@
                     .white_space
                         width: 44px
                         min-width: 44px
-                    .message
-                        background-color: rgba(0,0,0,0.3)
-                        border: 0px
-                        border-radius: 8px
-                        padding: 12px 6px
-                        color: white
-                        font-weight: bold
                     .time
                         padding-left: 4px
             &.message.me
@@ -210,13 +256,6 @@
                         display: block
                     .white_space
                         min-width: 25%
-                    .message
-                        background-color: rgba(0,0,0,0.3)
-                        border: 0px
-                        border-radius: 8px
-                        padding: 12px 6px
-                        color: white
-                        font-weight: bold
                     .time
                         justify-content: flex-end
                         padding-right: 4px
@@ -225,10 +264,12 @@
         height: 72px
         align-items: center
         padding: 0 8px
-        border-top: 1px solid rgba(0,0,0,0.3)
+        border-top: $borderStyle
         >*
             height: 36px
             margin-right: 8px
+        input[type="file"]
+            display: none
         .icon
             width: 24px
             height: 24px
@@ -242,10 +283,11 @@
         .input_message
             flex: 1
             height: 25%
-            border: 1px solid rgba(0,0,0,0.3)
+            border: $borderStyle
             border-radius: 10px
             -moz-appearance: none
             outline: 0px none transparent
+            background: transparent
             padding: 10px 10px
             font-size: 12px
             resize: none
@@ -263,20 +305,21 @@
             flex-direction: column
             position: fixed
             bottom: 80px
-            right: 0
+            right: 8px
             width: 308px
             height: 200px
-            border: 1px solid rgba(0, 0, 0, 0.3)
+            border: $borderStyle
+            background-color: $bgColor
             .header_wrap
                 display: flex
                 height: 40px
                 width: 100%
                 justify-content: space-between
                 align-items: center
-                border-bottom: 1px solid rgba(0, 0, 0, 0.1)
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1)
                 h4
                     margin: 0
-                    color: green
+                    color: $green !important
                     font-weight: bold
                     padding-left: 12px
             .emoticon_wrap

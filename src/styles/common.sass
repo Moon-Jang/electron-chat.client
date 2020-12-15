@@ -39,6 +39,10 @@ html, body
         height: 100%
         width: 100%
         flex-direction: column
+        background-image: url("../assets/background.svg")
+        background-position: 50%
+        background-repeat: no-repeat
+        background-size: cover
     .basic_layout
         main
             flex: 1
@@ -46,6 +50,10 @@ html, body
 *:not([type=password])
     font-family: 'Noto Sans KR', sans-serif
     font-weight: 300
+    color: white !important
+
+*
+    border-color: rgba(255,255,255,0.3) !important
 p
     margin: 0
 *:focus
