@@ -1,6 +1,10 @@
 import React, { useEffect, useMemo, useRef, useState } from "react"
 import { useDispatch } from "react-redux"
-import { exitRoom, fetchConversation } from "../../actions/chattingAction"
+import {
+    exitRoom,
+    fetchConversation,
+    fetchParticipantList,
+} from "../../actions/chattingAction"
 import {
     FETCH_CHATTING_ROOM_INFO,
     FETCH_PARTICIPANT_LIST,
@@ -40,6 +44,7 @@ const WebSocketComponent = (props) => {
     const setupSocket = (socket) => {
         socket.onopen = function (event) {
             console.log("Websocket connect Success")
+            setIsClose(false)
             const payload = {
                 action: "init",
             }
@@ -90,6 +95,10 @@ const WebSocketComponent = (props) => {
                 const { exitedUser } = payload
                 dispatch(exitRoom(exitedUser))
                 dispatch(fetchConversation(conversation))
+            } else if (routeKey === "invite") {
+                const conversation = JSON.parse(payload.conversation)
+                dispatch(fetchConversation(conversation))
+                dispatch(fetchParticipantList(roomIdx))
             }
         }
 

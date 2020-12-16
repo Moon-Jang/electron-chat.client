@@ -80,6 +80,10 @@ $green: #46AF46
                     background-color: $bgColor
                     border: $borderStyle
                     transition: all .35s
+                    &.personal
+                        height: 400px
+                    &.pasted
+                        height: 456px
                     .title
                         display: flex
                         align-items: center
@@ -102,6 +106,20 @@ $green: #46AF46
                             dd
                                 color: $green !important
                                 margin: 0
+                            .is_pasted
+                                color: white !important
+                            .unique_code
+                                display: flex
+                                justify-content: space-between
+                                .paste_icon
+                                    display: block
+                                    width: 20px
+                                    height: 20px
+                                    background-position: 50%
+                                    background-repeat: no-repeat
+                                    background-size: cover
+                                    &:hover
+                                        filter: invert(1)
                             dt
                     .participant_list
                         height: 148px
@@ -143,7 +161,125 @@ $green: #46AF46
                                 font-size: 12px
                                 padding-left: 8px
                                 cursor: pointer
-
+        .invite_friend_overlay
+            position: fixed
+            top: 0
+            width: 100%
+            height: 100vh
+            z-index: 990
+            background-color: rgba(0,0,0,0.6)
+            display: flex
+            justify-content: center
+            align-items: center
+            .invite_friend_wrap
+                display: flex
+                flex-direction: column
+                width: 304px
+                height: 464px
+                z-index: 991
+                border-radius: 2px
+                background-color: $bgColor
+                box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4)
+                -webkit-background-clip: padding-box
+                -moz-background-clip: padding-box
+                .header
+                    display: flex
+                    position: relative
+                    height: 60px
+                    align-items: center
+                    border-bottom: $borderStyle
+                    p
+                        padding-left: 20px
+                        font-size: 16px
+                        font-weight: bold
+                    button
+                        position: absolute
+                        top: 0
+                        right: 0
+                .search_wrap
+                    display: flex
+                    height: 60px
+                    align-items: center
+                    justify-content: center
+                    border-bottom: 1px solid rgba(0,0,0,0.4)
+                    .inputWrap
+                        background-color: white
+                        border: 1px solid rgba(255, 255, 255,0.4 )
+                        border-radius: 26px
+                        height: 26px
+                        width: 90%
+                        margin: 0 auto
+                        display: flex
+                        align-items: center
+                        .icon
+                            filter: invert(0.4)
+                            background-position: 50%
+                            background-repeat: no-repeat
+                            background-size: cover
+                            width: 18px
+                            height: 18px
+                            margin-left: 8px
+                        input
+                            border: 0
+                            width: 84%
+                            height: 90%
+                            padding: 0
+                            padding-left: 8px
+                            font-size: 14px
+                            margin: 0
+                            color: black !important
+                .friend_profile_wrap
+                    height: 272px
+                    overflow-y: auto
+                    margin: 0
+                    margin-bottom: 12px
+                    .profile
+                        display: flex
+                        width: 100%
+                        height: 56px
+                        align-items: center
+                        border-bottom: 1px solid rgba(0,0,0,0.4)
+                        &.selected
+                            background-color: rgba(255,255,255,0.3)
+                        .profile_image
+                            height: 36px
+                            width: 36px
+                            margin-left: 20px
+                            border-radius: 8px
+                            border: 1px solid rgba(0,0,0,0.3)
+                            background-position: 50%
+                            background-repeat: no-repeat
+                            background-size: cover
+                            cursor: pointer
+                        .name
+                            display: flex
+                            align-items: center
+                            height: 100%
+                            width: 100px
+                            padding-left: 12px
+                            font-size: 1em
+                            font-weight: bold
+                .add_button_wrap
+                    display: flex
+                    height: 40px
+                    flex-direction: row-reverse
+                    padding-bottom: 20px
+                    padding-right: 20px
+                    .MuiButton-root
+                        padding: 0
+                    button
+                        height: 36px
+                        width: 72px
+                        border: 0
+                        border-radius: 6px
+                        background-color: rgba(0,0,0,0.3)
+                        span
+                            font-weight: bold
+                    #cancelButton
+                        background-color: rgba(255,255,255,0.3)
+                    #addButton
+                        margin-right: 12px
+                        width: 80px
     .chatting_area
         flex: 1
         display: flex

@@ -4,6 +4,7 @@ import CloseIcon from "@material-ui/icons/Close"
 import SocketContext from "./context/SocketContext"
 import { AlertContext } from "./../router"
 import { alertDialog } from "../../util"
+import zIndex from "@material-ui/core/styles/zIndex"
 const EmoticonModal = (props) => {
     const { visibleState, userName } = props
     const [visible, setVisible] = visibleState
@@ -42,7 +43,10 @@ const EmoticonModal = (props) => {
     return (
         <div
             className="emoticon_modal_wrap"
-            style={{ display: visible ? "flex" : "none" }}>
+            style={{
+                opacity: visible ? 1 : 0,
+                zIndex: visible ? 1 : -999,
+            }}>
             <div className="header_wrap">
                 <h4>이모티콘</h4>
                 <IconButton onClick={() => setVisible(false)}>
