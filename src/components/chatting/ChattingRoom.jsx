@@ -2,6 +2,7 @@ import React from "react"
 import { useLocation, useParams } from "react-router-dom"
 import BasicLayout from "../../layout/BasicLayout"
 import "../../styles/chatting.sass"
+import "../../styles/emoticon.sass"
 import { parseQueryString } from "../../util"
 import Chatting from "./Chatting"
 import Footer from "./Footer"
@@ -31,8 +32,8 @@ const ChattingRoom = (props) => {
                         userName={userName}
                         isPersonal={isPersonal}
                     />
-                    <Chatting userName={userName} />
-                    <Footer userName={userName} />
+                    <Chatting userName={userName} roomIdx={roomIdx} />
+                    <Footer userName={userName} roomIdx={roomIdx} />
                 </div>
             </WebSocketComponent>
         </BasicLayout>

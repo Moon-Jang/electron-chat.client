@@ -1,6 +1,7 @@
 $mobile: 768px
 $visible: 1232px
 
+$bgColor: #3C465A
 $point: #4680C1
 $deepPoint: #396EAA
 $iconPoint: #005cff
@@ -39,6 +40,10 @@ html, body
         height: 100%
         width: 100%
         flex-direction: column
+        background-image: url("../assets/background.svg")
+        background-position: 50%
+        background-repeat: no-repeat
+        background-size: cover
     .basic_layout
         main
             flex: 1
@@ -46,6 +51,10 @@ html, body
 *:not([type=password])
     font-family: 'Noto Sans KR', sans-serif
     font-weight: 300
+    color: white !important
+
+*
+    border-color: rgba(255,255,255,0.3) !important
 p
     margin: 0
 *:focus
@@ -54,6 +63,8 @@ p
 .MuiBackdrop-root
     background-color: rgba(0, 0, 0, 0.2) !important
 
+.MuiPaper-root
+    background-color: $bgColor !important
 /* width */
 ::-webkit-scrollbar
     width: 10px

@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
 import ExitToAppIcon from "@material-ui/icons/ExitToApp"
 import CloseIcon from "@material-ui/icons/Close"
 import PersonAddIcon from "@material-ui/icons/PersonAdd"
@@ -8,8 +8,10 @@ import { closeWindow, alertDialog } from "../../util"
 import jwt from "jsonwebtoken"
 import SocketContext from "./context/SocketContext"
 import { AlertContext } from "../router"
+import InviteFriendModal from "./InviteFriendModal"
 const Header = (props) => {
     const { roomIdx, roomName, userName, isPersonal } = props
+    const modalVisibleState = useState(false)
     const parseRoomName = () => {
         if (!roomName.includes("$")) {
             return roomName
@@ -44,36 +46,67 @@ const Header = (props) => {
                         isPersonal={isPersonal}
                         roomName={parseRoomName()}
                         userName={userName}
+                        modalVisibleState={modalVisibleState}
                     />
                 </div>
             </div>
+            <InviteFriendModal visibleState={modalVisibleState} />
         </div>
     )
 }
 
 const Menu = (props) => {
+    const { isPersonal } = props
     return (
-        <div className="menu_wrap">
+        <div
+            id="menuWrap"
+            className={`menu_wrap ${isPersonal ? "personal" : ""}`}>
             <div className="title">
                 <h4>채팅방 정보</h4>
             </div>
-            <Description roomName={props.roomName} />
+            <Description roomName={props.roomName} isPersonal={isPersonal} />
             <ParticipantList />
             <ButtonWrap {...props} />
         </div>
     )
 }
 
-const Description = ({ roomName }) => {
+const Description = ({ roomName, isPersonal }) => {
     const roomInfo = useSelector((store) => store.chatting.info)
-
+    const [isPasted, setIsPasted] = useState(false)
+    const pasteCode = (e) => {
+        e.stopPropagation()
+        const roomCode = roomInfo?.room_code
+        if (roomCode) {
+            const element = document.createElement("textarea")
+            element.value = roomCode
+            element.setAttribute("readonly", "")
+            element.style.position = "absolute"
+            element.style.left = "-9999px"
+            document.body.appendChild(element)
+            element.select()
+            document.execCommand("copy")
+            setIsPasted(true)
+            document.body.removeChild(element)
+            document.getElementById("menuWrap").classList.add("pasted")
+        }
+    }
     return (
         <div className="description">
             <dl>
                 <dt>방제</dt>
                 <dd>{roomName}</dd>
                 <dt>고유코드</dt>
-                <dd>{roomInfo?.room_code || "없음"}</dd>
+                <dd className="unique_code" onClick={pasteCode}>
+                    {roomInfo?.room_code || "없음"}
+                    {!isPersonal && <span className="paste_icon"></span>}
+                </dd>
+                {isPasted && (
+                    <>
+                        <dt></dt>
+                        <dd className="is_pasted">복사되었습니다.</dd>
+                    </>
+                )}
                 <dt>비밀번호</dt>
                 <dd>{roomInfo?.password || "없음"}</dd>
             </dl>
@@ -88,10 +121,10 @@ const ParticipantList = () => {
         if (!userInfo || !participants) {
             return
         }
-        participantList.push(<Profile key={userInfo.name} {...userInfo} />)
+        participantList.push(<Profile key={userInfo.idx} {...userInfo} />)
         participants.forEach((el) => {
             if (el.isExited === "N") {
-                participantList.push(<Profile key={el.name} {...el} />)
+                participantList.push(<Profile key={el.idx} {...el} />)
             }
         })
         return participantList
@@ -126,11 +159,14 @@ const Profile = (props) => {
 }
 
 const ButtonWrap = (props) => {
-    const { roomIdx, userName, isPersonal } = props
+    const { roomIdx, userName, isPersonal, modalVisibleState } = props
+    console.log("isPersonal", isPersonal)
     const { idx } = jwt.decode(localStorage.jwt)
     const { socket, isConnect, isClose } = useContext(SocketContext)
     const alertContext = useContext(AlertContext)
-    const inviteFriend = () => {}
+    const inviteFriend = () => {
+        modalVisibleState[1](true)
+    }
     const exitRoom = () => {
         if (!isConnect) {
             return
@@ -163,13 +199,15 @@ const ButtonWrap = (props) => {
         closeWindow()
     }
     return (
-        <div className="button_wrap">
-            <Button
-                name="invite"
-                labelString="친구 초대"
-                Icon={PersonAddIcon}
-                onClick={inviteFriend}
-            />
+        <div className={`button_wrap`}>
+            {!isPersonal && (
+                <Button
+                    name="invite"
+                    labelString="친구 초대"
+                    Icon={PersonAddIcon}
+                    onClick={inviteFriend}
+                />
+            )}
             <Button
                 name="exit"
                 labelString="채팅방 나가기"

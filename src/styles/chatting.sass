@@ -1,3 +1,6 @@
+$bgColor: #3C465A
+$borderStyle: 1px solid rgba(255,255,255,0.3)
+$green: #46AF46
 .chatting_page
     display: flex
     flex-direction: column
@@ -5,7 +8,7 @@
     .header_area
         display: flex
         height: 48px
-        border-bottom: 1px solid rgba(0,0,0,0.3)
+        border-bottom: $borderStyle
         .chatting_room_name_wrap
             display: flex
             flex: 6
@@ -58,7 +61,7 @@
                         width: 100%
                         height: 2px
                         border-radius: 30px
-                        background-color: #000
+                        background-color: rgba(255,255,255,0.8)
                         transition: all .35s
                         &:nth-child(1)
                             top: 0
@@ -72,20 +75,25 @@
                     top: 39px
                     right: -210px
                     width: 200px
+                    z-index: 1
                     height: 432px
-                    background-color: #fff
-                    border: 1px solid rgba(0,0,0,0.3)
+                    background-color: $bgColor
+                    border: $borderStyle
                     transition: all .35s
+                    &.personal
+                        height: 400px
+                    &.pasted
+                        height: 456px
                     .title
                         display: flex
                         align-items: center
                         height: 40px
-                        border-bottom: 1px solid rgba(0,0,0,0.3)
+                        border-bottom: $borderStyle
                         h4
                             margin: 0
                             padding-left: 12px
                             font-weight: bold
-                            color: green
+                            color: $green !important
                     .description
                         dl
                             display: grid
@@ -94,16 +102,30 @@
                             font-size: 12px
                             padding: 16px 8px
                             row-gap: 8px
-                            border-bottom: 1px solid rgba(0,0,0,0.3)
+                            border-bottom: $borderStyle
                             dd
-                                color: green
+                                color: $green !important
                                 margin: 0
+                            .is_pasted
+                                color: white !important
+                            .unique_code
+                                display: flex
+                                justify-content: space-between
+                                .paste_icon
+                                    display: block
+                                    width: 20px
+                                    height: 20px
+                                    background-position: 50%
+                                    background-repeat: no-repeat
+                                    background-size: cover
+                                    &:hover
+                                        filter: invert(1)
                             dt
                     .participant_list
                         height: 148px
                         margin: 0 8px
                         padding: 16px 8px
-                        border-bottom: 1px solid rgba(0,0,0,0.3)
+                        border-bottom: $borderStyle
                         overflow-y: auto
                         &::-webkit-scrollbar
                             width: 6px
@@ -116,7 +138,7 @@
                             .profile_image
                                 height: 24px
                                 width: 24px
-                                border: 1px solid rgba(0,0,0,0.3)
+                                border: $borderStyle
                                 border-radius: 6px
                                 background-position: 50%
                                 background-repeat: no-repeat
@@ -139,7 +161,125 @@
                                 font-size: 12px
                                 padding-left: 8px
                                 cursor: pointer
-
+        .invite_friend_overlay
+            position: fixed
+            top: 0
+            width: 100%
+            height: 100vh
+            z-index: 990
+            background-color: rgba(0,0,0,0.6)
+            display: flex
+            justify-content: center
+            align-items: center
+            .invite_friend_wrap
+                display: flex
+                flex-direction: column
+                width: 304px
+                height: 464px
+                z-index: 991
+                border-radius: 2px
+                background-color: $bgColor
+                box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4)
+                -webkit-background-clip: padding-box
+                -moz-background-clip: padding-box
+                .header
+                    display: flex
+                    position: relative
+                    height: 60px
+                    align-items: center
+                    border-bottom: $borderStyle
+                    p
+                        padding-left: 20px
+                        font-size: 16px
+                        font-weight: bold
+                    button
+                        position: absolute
+                        top: 0
+                        right: 0
+                .search_wrap
+                    display: flex
+                    height: 60px
+                    align-items: center
+                    justify-content: center
+                    border-bottom: 1px solid rgba(0,0,0,0.4)
+                    .inputWrap
+                        background-color: white
+                        border: 1px solid rgba(255, 255, 255,0.4 )
+                        border-radius: 26px
+                        height: 26px
+                        width: 90%
+                        margin: 0 auto
+                        display: flex
+                        align-items: center
+                        .icon
+                            filter: invert(0.4)
+                            background-position: 50%
+                            background-repeat: no-repeat
+                            background-size: cover
+                            width: 18px
+                            height: 18px
+                            margin-left: 8px
+                        input
+                            border: 0
+                            width: 84%
+                            height: 90%
+                            padding: 0
+                            padding-left: 8px
+                            font-size: 14px
+                            margin: 0
+                            color: black !important
+                .friend_profile_wrap
+                    height: 272px
+                    overflow-y: auto
+                    margin: 0
+                    margin-bottom: 12px
+                    .profile
+                        display: flex
+                        width: 100%
+                        height: 56px
+                        align-items: center
+                        border-bottom: 1px solid rgba(0,0,0,0.4)
+                        &.selected
+                            background-color: rgba(255,255,255,0.3)
+                        .profile_image
+                            height: 36px
+                            width: 36px
+                            margin-left: 20px
+                            border-radius: 8px
+                            border: 1px solid rgba(0,0,0,0.3)
+                            background-position: 50%
+                            background-repeat: no-repeat
+                            background-size: cover
+                            cursor: pointer
+                        .name
+                            display: flex
+                            align-items: center
+                            height: 100%
+                            width: 100px
+                            padding-left: 12px
+                            font-size: 1em
+                            font-weight: bold
+                .add_button_wrap
+                    display: flex
+                    height: 40px
+                    flex-direction: row-reverse
+                    padding-bottom: 20px
+                    padding-right: 20px
+                    .MuiButton-root
+                        padding: 0
+                    button
+                        height: 36px
+                        width: 72px
+                        border: 0
+                        border-radius: 6px
+                        background-color: rgba(0,0,0,0.3)
+                        span
+                            font-weight: bold
+                    #cancelButton
+                        background-color: rgba(255,255,255,0.3)
+                    #addButton
+                        margin-right: 12px
+                        width: 80px
     .chatting_area
         flex: 1
         display: flex
@@ -160,16 +300,66 @@
                         padding: 0 4px
                     .bar
                         flex: 1
-                        border-top: 1px solid rgba(0,0,0,0.3)
+                        border-top: $borderStyle
                         height: 1px
             &.message
                 .message_wrap
+                    .message
+                        background-color: rgba(0,0,0,0.3)
+                        border: 0px
+                        border-radius: 8px
+                        padding: 8px 12px
+                        color: white
+                        font-weight: bold
+                        max-width: 63%
+                        word-break: break-all
                     .time
                         width: 72px
                         min-width: 72px
                         display: flex !important
                         align-items: flex-end
                         font-size: 11px
+                    .emoticon
+                        width: 80px
+                        height: 80px
+                        background-position: 50%
+                        background-repeat: no-repeat
+                        background-size: cover
+                    .image
+                        width: 200px
+                        height: 200px
+                        background-position: 50%
+                        background-repeat: no-repeat
+                        background-size: cover
+                    .file
+                        width: 100%
+                        background-color: transparent
+                        display: flex
+                        justify-content: center
+                        align-items: center
+                        cursor: pointer
+                        .svg_wrap
+                            display: flex
+                            min-width: 48px
+                            min-height: 48px
+                            border-radius: 100%
+                            border: $borderStyle
+                            justify-content: center
+                            align-items: center
+                            margin-left: 8px
+                            .MuiSvgIcon-root
+                                filter: invert(0.15)
+                                min-width: 36px
+                                min-height: 36px
+                        .file_name_wrap
+                            display: flex
+                            justify-content: flex-start
+                            align-items: center
+                            min-width: 156px
+                            padding: 0 8px
+                            padding-left: 12px
+                            a
+                                text-decoration: none
             &.message.other
                 .profile_wrap
                     display: flex
@@ -179,7 +369,7 @@
                         height: 40px
                         border-radius: 10px
                         background-position: 50%
-                        border: 1px solid rgba(0,0,0,0.3)
+                        border: $borderStyle
                         background-repeat: no-repeat
                         background-size: cover
                         background-color: #fff
@@ -192,13 +382,6 @@
                     .white_space
                         width: 44px
                         min-width: 44px
-                    .message
-                        background-color: rgba(0,0,0,0.3)
-                        border: 0px
-                        border-radius: 8px
-                        padding: 12px 6px
-                        color: white
-                        font-weight: bold
                     .time
                         padding-left: 4px
             &.message.me
@@ -209,13 +392,6 @@
                         display: block
                     .white_space
                         min-width: 25%
-                    .message
-                        background-color: rgba(0,0,0,0.3)
-                        border: 0px
-                        border-radius: 8px
-                        padding: 12px 6px
-                        color: white
-                        font-weight: bold
                     .time
                         justify-content: flex-end
                         padding-right: 4px
@@ -224,10 +400,12 @@
         height: 72px
         align-items: center
         padding: 0 8px
-        border-top: 1px solid rgba(0,0,0,0.3)
+        border-top: $borderStyle
         >*
             height: 36px
             margin-right: 8px
+        input[type="file"]
+            display: none
         .icon
             width: 24px
             height: 24px
@@ -241,10 +419,11 @@
         .input_message
             flex: 1
             height: 25%
-            border: 1px solid rgba(0,0,0,0.3)
+            border: $borderStyle
             border-radius: 10px
             -moz-appearance: none
             outline: 0px none transparent
+            background: transparent
             padding: 10px 10px
             font-size: 12px
             resize: none
@@ -257,3 +436,45 @@
             border-radius: 10px
             color: #fff
             cursor: pointer
+        .emoticon_modal_wrap
+            display: flex
+            flex-direction: column
+            position: fixed
+            bottom: 80px
+            right: 8px
+            width: 308px
+            height: 200px
+            border: $borderStyle
+            background-color: $bgColor
+            .header_wrap
+                display: flex
+                height: 40px
+                width: 100%
+                justify-content: space-between
+                align-items: center
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1)
+                h4
+                    margin: 0
+                    color: $green !important
+                    font-weight: bold
+                    padding-left: 12px
+            .emoticon_wrap
+                flex: 1
+                width: 100%
+                display: grid
+                grid-template-columns: repeat(9,1fr)
+                grid-auto-rows: 32px
+                align-items: center
+                justify-items: center
+                margin: 4px 0
+                overflow-y: auto
+                &::-webkit-scrollbar
+                    width: 4px
+                .emoticon
+                    height: 24px
+                    width: 24px
+                    background-position: 50%
+                    background-repeat: no-repeat
+                    background-size: cover
+                    &.angel
+                        background-image: url("../assets/emoticons/angel.svg")

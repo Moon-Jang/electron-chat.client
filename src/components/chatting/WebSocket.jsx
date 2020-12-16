@@ -1,6 +1,10 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useMemo, useRef, useState } from "react"
 import { useDispatch } from "react-redux"
-import { exitRoom, fetchConversation } from "../../actions/chattingAction"
+import {
+    exitRoom,
+    fetchConversation,
+    fetchParticipantList,
+} from "../../actions/chattingAction"
 import {
     FETCH_CHATTING_ROOM_INFO,
     FETCH_PARTICIPANT_LIST,
@@ -11,34 +15,40 @@ import SocketContext from "./context/SocketContext"
 const MAX_CONNECTION_CNT = 10
 const WebSocketComponent = (props) => {
     const { roomIdx, userName, children } = props
-    const [socket, setSocket] = useState(
-        new WebSocket(
-            `ws://localhost:3001?roomIdx=${roomIdx}&userName=${userName}&jwt=${localStorage.jwt}`
-        )
-    )
     const [isClose, setIsClose] = useState(false)
     const [isError, setIsError] = useState(false)
     const [isConnect, setisConnect] = useState(false)
     const connectionCnt = useRef(0)
     const dispatch = useDispatch()
-
+    const socket = useMemo(
+        () =>
+            new WebSocket(
+                `ws://localhost:3001?roomIdx=${roomIdx}&userName=${userName}&jwt=${localStorage.jwt}&reconnectCnt=${connectionCnt.current}`
+            ),
+        [isClose] //eslint-disable-line
+    )
     useEffect(() => {
-        setupSocket(socket)
+        if (connectionCnt.current < MAX_CONNECTION_CNT) {
+            setupSocket(socket)
+            console.log("connect_cnt", connectionCnt.current)
+            connectionCnt.current++
+        }
         return () => {
             //willUnMount.current = true
             //connectionCnt.current = MAX_CONNECTION_CNT
             //socket.close()
         }
         //eslint-disable-next-line
-    }, [socket])
+    }, [isClose])
 
     const setupSocket = (socket) => {
         socket.onopen = function (event) {
             console.log("Websocket connect Success")
+            setIsClose(false)
             const payload = {
                 action: "init",
             }
-            setTimeout(() => socket.send(JSON.stringify(payload)), 250)
+            setTimeout(() => socket.send(JSON.stringify(payload)), 300)
         }
         socket.onmessage = function (event) {
             console.log("event", event)
@@ -85,6 +95,10 @@ const WebSocketComponent = (props) => {
                 const { exitedUser } = payload
                 dispatch(exitRoom(exitedUser))
                 dispatch(fetchConversation(conversation))
+            } else if (routeKey === "invite") {
+                const conversation = JSON.parse(payload.conversation)
+                dispatch(fetchConversation(conversation))
+                dispatch(fetchParticipantList(roomIdx))
             }
         }
 
@@ -99,21 +113,6 @@ const WebSocketComponent = (props) => {
         }
         socket.onclose = function (event) {
             console.log("Disconnected from WebSocket.")
-            if (connectionCnt.current < MAX_CONNECTION_CNT) {
-                console.log("test", connectionCnt.current)
-                //eslint-disable-next-line
-                setTimeout(() => {
-                    setSocket(
-                        new WebSocket(
-                            `ws://localhost:3001?roomIdx=${roomIdx}&userName=${userName}&jwt=${localStorage.jwt}&n=${connectionCnt.current}`
-                            // "wss://nsi43m46q1.execute-api.ap-northeast-2.amazonaws.com/prod" +
-                            //     `?roomIdx=${roomIdx}&userName=${userName}`
-                        )
-                    )
-                }, 100)
-                connectionCnt.current++
-                return
-            }
             setIsClose(true)
             // if ( !isAdmin.current ) {
             //     history.replace(`../book/${groupId}`)

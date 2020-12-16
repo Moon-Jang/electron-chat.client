@@ -160,56 +160,6 @@ const FriendProfileWrap = (props) => {
             {friendList !== false
                 ? renderFriendProfiles()
                 : "서버의 오류로 친구목록을 받아오지 못했습니다.\n다시 시도해주세요"}
-            <div className="profile">
-                <div className="profile_image person_icon"></div>
-                <p className="name">홍길동</p>
-                <div className="whitespace"></div>
-            </div>
-            <div className="profile">
-                <div className="profile_image person_icon"></div>
-                <p className="name">홍길동</p>
-                <div className="whitespace"></div>
-            </div>
-            <div className="profile">
-                <div className="profile_image person_icon"></div>
-                <p className="name">홍길동</p>
-                <div className="whitespace"></div>
-            </div>
-            <div className="profile">
-                <div className="profile_image person_icon"></div>
-                <p className="name">홍길동</p>
-                <div className="whitespace"></div>
-            </div>
-            <div className="profile">
-                <div className="profile_image person_icon"></div>
-                <p className="name">홍길동</p>
-                <div className="whitespace"></div>
-            </div>
-            <div className="profile">
-                <div className="profile_image person_icon"></div>
-                <p className="name">홍길동</p>
-                <div className="whitespace"></div>
-            </div>
-            <div className="profile">
-                <div className="profile_image person_icon"></div>
-                <p className="name">홍길동</p>
-                <div className="whitespace"></div>
-            </div>
-            <div className="profile">
-                <div className="profile_image person_icon"></div>
-                <p className="name">홍길동</p>
-                <div className="whitespace"></div>
-            </div>
-            <div className="profile">
-                <div className="profile_image person_icon"></div>
-                <p className="name">홍길동</p>
-                <div className="whitespace"></div>
-            </div>
-            <div className="profile">
-                <div className="profile_image person_icon"></div>
-                <p className="name">홍길동</p>
-                <div className="whitespace"></div>
-            </div>
         </div>
     )
 }

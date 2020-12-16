@@ -8,6 +8,8 @@ import API_addFriend from "./friends/idx/addFriend"
 import API_accessPersonalRoom from "./common/accessPersonalRoom"
 import API_getChattingRooms from "./rooms/getChattingRooms"
 import API_getParticipantList from "./participants/getParticipantList"
+import API_sendFile from "./common/sendFile"
+import API_createRoom from "./rooms/createRoom"
 export { API_login,
     API_confirmIdDuplication,
     API_accessPersonalRoom,
@@ -16,5 +18,7 @@ export { API_login,
     API_findFriends,
     API_addFriend,
     API_getChattingRooms,
-    API_getParticipantList
+    API_getParticipantList,
+    API_sendFile,
+    API_createRoom
 }

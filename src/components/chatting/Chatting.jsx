@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useMemo, useRef } from "react"
 import { useSelector } from "react-redux"
 import SocketContext from "./context/SocketContext"
+import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile"
 const Chatting = (props) => {
-    const { userName } = props
+    const { userName, roomIdx } = props
     const { isConnect, isClose } = useContext(SocketContext)
     const participants = useSelector((store) => store.chatting.participants)
     const conversation = useSelector((store) => store.chatting.conversation)
@@ -30,17 +31,16 @@ const Chatting = (props) => {
                     return <SystemChat key={el.time} message={el.message} />
                 case "message":
                     return el.name === userName ? (
-                        <MyChat key={el.time} {...el} />
+                        <MyChat key={el.time} roomIdx={roomIdx} {...el} />
                     ) : (
                         <OtherChat
                             key={el.time}
                             parentChat={conversation[idx - 1]}
                             participants={participants}
+                            roomIdx={roomIdx}
                             {...el}
                         />
                     )
-                // case "picture":
-                //     return
                 default:
                     return (
                         <SystemChat
@@ -71,9 +71,10 @@ const SystemChat = React.memo(({ message }) => {
 })
 
 const OtherChat = React.memo((props) => {
-    const { name, message, time, parentChat, participants } = props
+    const { name, message, time, parentChat, participants, roomIdx } = props
     const timeString = useMemo(() => formatTime(time), [time])
     const imageUrl = participants.find((el) => el.name === name).profileImageUrl
+
     return (
         <div className="chat_wrap message other">
             <div className="profile_wrap">
@@ -88,26 +89,28 @@ const OtherChat = React.memo((props) => {
                     </>
                 )}
             </div>
-            <div className="message_wrap">
-                <span className="white_space"></span>
-                <span className="message">{message}</span>
-                <span className="time">{timeString}</span>
-            </div>
+            <Message
+                message={message}
+                userType="other"
+                timeString={timeString}
+                roomIdx={roomIdx}
+            />
         </div>
     )
 })
 
 const MyChat = React.memo((props) => {
-    const { message, time } = props
+    const { message, time, roomIdx } = props
     const timeString = useMemo(() => formatTime(time), [time])
 
     return (
         <div className="chat_wrap message me">
-            <div className="message_wrap">
-                <span className="message">{message}</span>
-                <span className="time">{timeString}</span>
-                <span className="white_space"></span>
-            </div>
+            <Message
+                message={message}
+                userType="my"
+                roomIdx={roomIdx}
+                timeString={timeString}
+            />
         </div>
     )
 })
@@ -121,6 +124,82 @@ function formatTime(timestamp) {
     hours = hours > 10 ? hours : "0" + hours
     minutes = minutes > 10 ? minutes : "0" + minutes
     return `${offset} ${hours}:${minutes}`
+}
+
+const Message = (props) => {
+    const { message, timeString, userType, roomIdx } = props
+    const s3Url = `https://electron-chat-file-storage.s3.ap-northeast-2.amazonaws.com/chatting_room_${roomIdx}/`
+    const anchorRef = useRef(null)
+    const renderMessage = () => {
+        const [type, name] = message.split(" ")
+        switch (type) {
+            case "/emoticon":
+                return (
+                    <>
+                        <div className="message">
+                            <div className={`emoticon ${name}`}></div>
+                        </div>
+                    </>
+                )
+            case "/image":
+                return (
+                    <>
+                        <div className="message">
+                            <div
+                                className={`image`}
+                                style={{
+                                    backgroundImage: `url(${s3Url + name})`,
+                                }}></div>
+                        </div>
+                    </>
+                )
+            case "/file":
+                // let blob = await fetch(url).then(r => r.blob());
+                // const blob = dataURItoBlob(`${s3Url + name}`)
+                // console.log("blob", blob)
+                return (
+                    <>
+                        <div
+                            className="message"
+                            onClick={() => anchorRef.current.click()}>
+                            <div className={`file`}>
+                                <div className="svg_wrap">
+                                    <InsertDriveFileIcon />
+                                </div>
+                                <div className="file_name_wrap">
+                                    <a href={`${s3Url + name}`} ref={anchorRef}>
+                                        {decodeURI(name)}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </>
+                )
+            default:
+                return (
+                    <>
+                        <div className="message">{message}</div>
+                    </>
+                )
+        }
+    }
+    return (
+        <div className="message_wrap">
+            {userType === "other" ? (
+                <>
+                    <span className="white_space"></span>
+                    {renderMessage()}
+                    <span className="time">{timeString}</span>
+                </>
+            ) : (
+                <>
+                    {renderMessage()}
+                    <span className="time">{timeString}</span>
+                    <span className="white_space"></span>
+                </>
+            )}
+        </div>
+    )
 }
 
 export default Chatting
