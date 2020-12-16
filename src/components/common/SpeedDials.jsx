@@ -25,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
         transform: "translateZ(0px)",
         flexGrow: 1,
     },
+    speedDialAction: {
+        backgroundColor: "rgba(255,255,255,0.3)",
+    },
 }))
 
 export default function SpeedDials({ actions }) {
@@ -54,6 +57,7 @@ export default function SpeedDials({ actions }) {
             {actions &&
                 actions.map((action) => (
                     <SpeedDialAction
+                        className={classes.speedDialAction}
                         key={action.name}
                         icon={action.icon}
                         tooltipTitle={action.name}

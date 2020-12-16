@@ -6,9 +6,12 @@ import { useHistory } from "react-router-dom"
 import { createNewWindow } from "../../../util"
 import { useDispatch, useSelector, useStore } from "react-redux"
 import { fetchChattingRoomList } from "../../../actions/mainAction"
+import AddChattingRoomModal from "./AddChattingRoomModal"
 
 const ChatTab = () => {
     const history = useHistory()
+    const modlaVisibleState = useState("")
+    const [visible, setVisible] = modlaVisibleState
     const keywordState = useState("")
     const [keyword] = keywordState
     if (history.action === "POP") {
@@ -19,7 +22,7 @@ const ChatTab = () => {
         {
             icon: <AddCommentOutlinedIcon />,
             name: "채팅방 생성",
-            onClick: () => {},
+            onClick: () => setVisible(!visible),
         },
         {
             icon: <ExitToAppIcon />,
@@ -35,7 +38,8 @@ const ChatTab = () => {
         <>
             <Search keywordState={keywordState} />
             <div className="main_contents">
-                <ChattingRoomWrap keyword={keyword} />
+                <ChattingRoomWrap keyword={keyword} visible={visible} />
+                <AddChattingRoomModal visibleState={modlaVisibleState} />
             </div>
             <SpeedDials actions={actions} />
         </>
@@ -69,14 +73,14 @@ const Search = ({ keywordState }) => {
     )
 }
 const ChattingRoomWrap = (props) => {
-    const { keyword } = props
+    const { keyword, visible } = props
     const { user } = useStore().getState()
     const { info } = user
     const chattingRoomList = useSelector((store) => store.chatting.rooms)
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(fetchChattingRoomList())
-    }, []) //eslint-disable-line
+    }, [visible]) //eslint-disable-line
 
     const renderChattingRoom = () => {
         if (!chattingRoomList) {
@@ -109,8 +113,11 @@ const ChattingRoom = (props) => {
     const history = useHistory()
     const openChat = (e) => {
         e.stopPropagation()
-        history.push(`/chatting/${idx}?roomName=${name}&userName=${userName}`)
-        // const url = `http://localhost:3030/#/chatting/1?roomName=${roomName}&userName=${userName}`
+        history.push(
+            `/chatting/${idx}?roomName=${name}&userName=${userName}&isPersonal=${isPersonal}`
+        )
+        //const queryString = `?roomName=${name}&userName=${userName}&isPersonal=${isPersonal}`
+        // const url = `http://localhost:3030/#/chatting/${idx+queryString}`
         // createNewWindow(url)
     }
     const parseName = () => {
@@ -141,6 +148,20 @@ const ChattingRoom = (props) => {
             )
         }
         switch (participants.length) {
+            case 1:
+                profileImages = (
+                    <div className="profile_image_wrap">
+                        <div
+                            className={"profile_image_multiple"}
+                            style={{
+                                width: "40px",
+                                height: "40px",
+                                backgroundImage: `url(${participants[0].profileImageUrl})`,
+                            }}
+                        />
+                    </div>
+                )
+                break
             case 2:
                 profileImages = (
                     <div className="profile_image_wrap">

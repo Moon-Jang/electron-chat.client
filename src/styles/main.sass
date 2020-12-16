@@ -1,6 +1,7 @@
 $bgColor: #3C465A
 $borderStyle: 1px solid rgba(255,255,255,0.3)
 $green: #46AF46
+
 .main_page
     display: flex
     flex-direction: column
@@ -9,21 +10,21 @@ $green: #46AF46
         flex: 1
         max-height: 54px
         display: flex
-        border-top: 1px solid rgba(0, 0, 0,0.5 )
-        border-bottom: 1px solid rgba(0, 0, 0,0.5 )
+        border-top: $borderStyle
+        border-bottom: $borderStyle
         button
             flex: 1
             border: 0
             font-size: 1.25em
             cursor: pointer
-            background-color: transparent
+            background-color: rgba(255, 255, 255,0.3 )
             &:hover
                 opacity: 0.7
         #navigationFriendButton
-            border-right: 1px solid rgba(0, 0, 0,0.5 )
+            border-right: $borderStyle
         #navigationChatButton
         .selected
-            background-color: rgba(255, 255, 255,0.3 )
+            background-color: transparent
             color: white
     .search_area
         flex: 1
@@ -56,6 +57,7 @@ $green: #46AF46
                 padding-left: 8px
                 font-size: 1.2em
                 margin: 0
+                color: black !important
         &.chat
             border-bottom: 1px solid rgba(0,0,0,0.3)
             padding-bottom: 18px
@@ -186,7 +188,7 @@ $green: #46AF46
             width: 100%
             height: 100vh
             z-index: 990
-            background-color: rgba(0,0,0,0.3)
+            background-color: rgba(0,0,0,0.6)
             display: flex
             justify-content: center
             align-items: center
@@ -197,16 +199,18 @@ $green: #46AF46
                 height: 464px
                 z-index: 991
                 border-radius: 2px
-                background-color: #fff
+                background-color: $bgColor
                 box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4)
                 -webkit-background-clip: padding-box
                 -moz-background-clip: padding-box
+                &.step1
+                    height: 252px
                 .header
                     display: flex
                     position: relative
                     height: 60px
                     align-items: center
-                    border-bottom: 1px solid rgba(0, 0, 0,0.3 )
+                    border-bottom: $borderStyle
                     p
                         padding-left: 20px
                         font-size: 16px
@@ -215,57 +219,28 @@ $green: #46AF46
                         position: absolute
                         top: 0
                         right: 0
-                .add_button_wrap
-                    display: flex
-                    height: 40px
-                    flex-direction: row-reverse
-                    padding-bottom: 20px
-                    padding-right: 20px
-                    .MuiButton-root
-                        padding: 0
-                    button
-                        height: 36px
-                        width: 84px
-                        border: 0
-                        border-radius: 6px
-                        background-color: rgba(0,0,0,0.3)
-                        span
-                            font-weight: bold
-        .add_friend_overlay
-            position: fixed
-            top: 0
-            width: 100%
-            height: 100vh
-            z-index: 990
-            background-color: rgba(0,0,0,0.3)
-            display: flex
-            justify-content: center
-            align-items: center
-            .add_friend_wrap
-                display: flex
-                flex-direction: column
-                width: 304px
-                height: 464px
-                z-index: 991
-                border-radius: 2px
-                background-color: #fff
-                box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4)
-                -webkit-background-clip: padding-box
-                -moz-background-clip: padding-box
-                .header
-                    display: flex
-                    position: relative
-                    height: 60px
-                    align-items: center
-                    border-bottom: 1px solid rgba(0, 0, 0,0.3 )
-                    p
-                        padding-left: 20px
-                        font-size: 16px
-                        font-weight: bold
-                    button
-                        position: absolute
-                        top: 0
-                        right: 0
+                .room_data_wrap
+                    display: grid
+                    grid-template-columns: 1fr 1fr
+                    padding: 28px 20px
+                    row-gap: 12px
+                    label
+                        display: flex
+                        align-items: center
+                        .icon
+                            width: 20px
+                            height: 20px
+                            display: block
+                            background-position: 50%
+                            background-repeat: no-repeat
+                            background-size: cover
+                            margin-left: 4px
+                    input
+                        background-color: transparent
+                        border: 1px solid rgba(255,255,255,0.3)
+                        padding: 8px
+                        &:disabled
+                            background-color: rgba(255,255,255,0.3)
                 .search_wrap
                     display: flex
                     height: 60px
@@ -273,7 +248,7 @@ $green: #46AF46
                     justify-content: center
                     .inputWrap
                         background-color: white
-                        border: 1px solid rgba(0, 0, 0,0.4 )
+                        border: 1px solid rgba(255, 255, 255,0.4 )
                         border-radius: 26px
                         height: 26px
                         width: 90%
@@ -296,6 +271,106 @@ $green: #46AF46
                             padding-left: 8px
                             font-size: 14px
                             margin: 0
+                            color: black !important
+                .friend_profile_wrap
+                    height: 200px
+                    overflow-y: auto
+                    margin: 0
+                    margin-bottom: 12px
+                    .profile
+                        height: 48px
+                        .profile_image
+                            height: 36px
+                            width: 36px
+                        .name
+                            font-size: 1em
+                .add_button_wrap
+                    display: flex
+                    height: 40px
+                    flex-direction: row-reverse
+                    padding-bottom: 20px
+                    padding-right: 20px
+                    .MuiButton-root
+                        padding: 0
+                    button
+                        height: 36px
+                        width: 72px
+                        border: 0
+                        border-radius: 6px
+                        background-color: rgba(0,0,0,0.3)
+                        span
+                            font-weight: bold
+                    #cancelButton
+                        background-color: rgba(255,255,255,0.3)
+                    #addButton
+                        margin-right: 12px
+                        width: 80px
+        .add_friend_overlay
+            position: fixed
+            top: 0
+            width: 100%
+            height: 100vh
+            z-index: 990
+            background-color: rgba(0,0,0,0.6)
+            display: flex
+            justify-content: center
+            align-items: center
+            .add_friend_wrap
+                display: flex
+                flex-direction: column
+                width: 304px
+                height: 464px
+                z-index: 991
+                border-radius: 2px
+                background-color: $bgColor
+                box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4)
+                -webkit-background-clip: padding-box
+                -moz-background-clip: padding-box
+                .header
+                    display: flex
+                    position: relative
+                    height: 60px
+                    align-items: center
+                    border-bottom: $borderStyle
+                    p
+                        padding-left: 20px
+                        font-size: 16px
+                        font-weight: bold
+                    button
+                        position: absolute
+                        top: 0
+                        right: 0
+                .search_wrap
+                    display: flex
+                    height: 60px
+                    align-items: center
+                    justify-content: center
+                    .inputWrap
+                        background-color: white
+                        border: 1px solid rgba(255, 255, 255,0.4 )
+                        border-radius: 26px
+                        height: 26px
+                        width: 90%
+                        margin: 0 auto
+                        display: flex
+                        align-items: center
+                        .icon
+                            filter: invert(0.4)
+                            background-position: 50%
+                            background-repeat: no-repeat
+                            background-size: cover
+                            width: 18px
+                            height: 18px
+                            margin-left: 8px
+                        input
+                            border: 0
+                            width: 84%
+                            height: 90%
+                            padding: 0
+                            padding-left: 8px
+                            font-size: 14px
+                            margin: 0
+                            color: black !important
                 .friend_profile_wrap
                     flex: 1
                     overflow-y: auto
@@ -323,17 +398,21 @@ $green: #46AF46
                         padding: 0
                     button
                         height: 36px
-                        width: 84px
+                        width: 72px
                         border: 0
                         border-radius: 6px
                         background-color: rgba(0,0,0,0.3)
                         span
                             font-weight: bold
+                    #cancelButton
+                        background-color: rgba(255,255,255,0.3)
+                    #addButton
+                        margin-right: 12px
     .MuiSpeedDial-root
         right: 24px !important
         bottom: 24px !important
         z-index: 899
         .MuiSpeedDial-fab
-            background-color: rgb(169,169,169)
+            background-color: rgba(255,255,255,0.3)
             &:hover
-                background-color: rgb(128,128,128)
+                background-color: rgba(255,255,255,0.6)

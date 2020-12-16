@@ -54,7 +54,6 @@ const SearchWrap = ({ visible }) => {
         } else {
             dispatch(resetFindFriends())
         }
-        console.log("value", value)
         setKeyword(value)
     }
     return (
@@ -124,12 +123,6 @@ const FriendProfileWrap = ({ visible }) => {
             {searchedFriendList !== false
                 ? renderProfiles()
                 : "서버의 오류로 친구목록을 받아오지 못했습니다.\n다시 시도해주세요"}
-            <Profile
-                name="홍길동"
-                id="hellowakiki"
-                idx={1}
-                dispatch={dispatch}
-            />
         </div>
     )
 }
@@ -164,8 +157,16 @@ const ButtonWrap = (props) => {
         setIsAdding(false)
         setVisible(false)
     }
+
+    const cancel = (e) => {
+        setVisible(false)
+    }
+
     return (
         <div className="add_button_wrap">
+            <Button id="cancelButton" variant="contained" onClick={cancel}>
+                취소
+            </Button>
             <Button id="addButton" variant="contained" onClick={addFriend}>
                 {isAdding ? <CircularProgress size={20} /> : "친구 추가"}
             </Button>
