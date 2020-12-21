@@ -309,10 +309,12 @@ $green: #46AF46
                         border: 0px
                         border-radius: 8px
                         padding: 8px 12px
-                        color: white
-                        font-weight: bold
+                        color: black !important
+                        font-weight: 400
                         max-width: 63%
                         word-break: break-all
+                        &.emoticon
+                            background-color: transparent !important
                     .time
                         width: 72px
                         min-width: 72px
@@ -343,12 +345,13 @@ $green: #46AF46
                             min-width: 48px
                             min-height: 48px
                             border-radius: 100%
-                            border: $borderStyle
+                            border: 1px solid
+                            border-color: rgba(0,0,0,0.3) !important
                             justify-content: center
                             align-items: center
                             margin-left: 8px
                             .MuiSvgIcon-root
-                                filter: invert(0.15)
+                                filter: invert(0.6)
                                 min-width: 36px
                                 min-height: 36px
                         .file_name_wrap
@@ -360,16 +363,17 @@ $green: #46AF46
                             padding-left: 12px
                             a
                                 text-decoration: none
+                                font-weight: 400
+                                color: black !important
             &.message.other
                 .profile_wrap
                     display: flex
                     align-items: center
                     .profile_image
-                        width: 40px
-                        height: 40px
+                        width: 42px
+                        height: 42px
                         border-radius: 10px
                         background-position: 50%
-                        border: $borderStyle
                         background-repeat: no-repeat
                         background-size: cover
                         background-color: #fff
@@ -377,6 +381,8 @@ $green: #46AF46
                         margin-left: 8px
                 .message_wrap
                     display: flex
+                    .message
+                        background-color: white
                     span
                         display: block
                     .white_space
@@ -388,6 +394,8 @@ $green: #46AF46
                 .message_wrap
                     display: flex
                     flex-direction: row-reverse
+                    .message
+                        background-color: #FFFF00
                     span
                         display: block
                     .white_space

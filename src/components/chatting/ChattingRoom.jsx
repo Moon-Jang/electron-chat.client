@@ -14,6 +14,7 @@ const ChattingRoom = (props) => {
     const queryString = parseQueryString(search.slice(1))
     const { roomName, userName } = queryString
     const isPersonal = queryString.isPersonal === "true" ? true : false
+    const isPassed = queryString.isPassed === "true" ? true : false
 
     const clearView = () => {
         const hamburgerInput = document.getElementById("hamburgerInput")
@@ -24,7 +25,10 @@ const ChattingRoom = (props) => {
 
     return (
         <BasicLayout>
-            <WebSocketComponent roomIdx={roomIdx} userName={userName}>
+            <WebSocketComponent
+                roomIdx={roomIdx}
+                userName={userName}
+                isPassed={isPassed}>
                 <div className="chatting_page" onClick={clearView}>
                     <Header
                         roomIdx={roomIdx}

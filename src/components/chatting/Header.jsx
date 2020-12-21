@@ -129,19 +129,7 @@ const ParticipantList = () => {
         })
         return participantList
     }
-    return (
-        <div className="participant_list">
-            {renderParticipantList()}
-            <Profile name="사용자1" />
-            <Profile name="사용자2" />
-            <Profile name="사용자3" />
-            <Profile name="사용자4" />
-            <Profile name="사용자1" />
-            <Profile name="사용자2" />
-            <Profile name="사용자3" />
-            <Profile name="사용자4" />
-        </div>
-    )
+    return <div className="participant_list">{renderParticipantList()}</div>
 }
 const Profile = (props) => {
     const { name, profileImageUrl } = props

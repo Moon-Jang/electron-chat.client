@@ -136,7 +136,7 @@ const Message = (props) => {
             case "/emoticon":
                 return (
                     <>
-                        <div className="message">
+                        <div className="message emoticon">
                             <div className={`emoticon ${name}`}></div>
                         </div>
                     </>
