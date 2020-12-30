@@ -13,20 +13,7 @@ const FriendTab = () => {
     const keywordState = useState("")
     const [keyword] = keywordState
     const visibleState = useState(false)
-    const ipcRenderer = window.require && window.require("electron").ipcRenderer
 
-    useEffect(() => {
-        receiveDeleteFriendMessage()
-    }, []) //eslint-disable-line
-
-    const receiveDeleteFriendMessage = () => {
-        console.log("ipcRenderer", ipcRenderer)
-        if (ipcRenderer) {
-            ipcRenderer.once("delete-friend-success", (event, arg) => {
-                console.log(arg)
-            })
-        }
-    }
     const actions = [
         {
             icon: <PersonAddIcon />,
@@ -101,11 +88,15 @@ const MyProfileWrap = () => {
 }
 
 const Profile = (props) => {
-    const { idx, name, imageUrl } = props
-
+    const { idx, name, isApp, imageUrl } = props
+    const history = useHistory()
     const handleClick = (e) => {
         e.stopPropagation()
         const queryString = `?friendIdx=${idx}&friendName=${name}&imageUrl=${imageUrl}`
+        if (!isApp) {
+            history.push("/profile/" + queryString)
+            return
+        }
         const url = `http://localhost:3030/#/profile/${queryString}`
         createNewWindow(url)
     }
@@ -124,6 +115,7 @@ const Profile = (props) => {
 const FriendProfileWrap = (props) => {
     const { keyword } = props
     const friendList = useSelector((store) => store.user.friendList)
+    const isApp = window.require
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -142,6 +134,7 @@ const FriendProfileWrap = (props) => {
                     <Profile
                         key={el.idx}
                         imageUrl={el.profile_image_url}
+                        isApp={isApp}
                         {...el}
                     />
                 )
@@ -151,7 +144,12 @@ const FriendProfileWrap = (props) => {
         return friendList
             .filter((friend) => friend.name.match(regExp))
             .map((el) => (
-                <Profile key={el.idx} imageUrl={el.profile_image_url} {...el} />
+                <Profile
+                    key={el.idx}
+                    isApp={isApp}
+                    imageUrl={el.profile_image_url}
+                    {...el}
+                />
             ))
     }
 

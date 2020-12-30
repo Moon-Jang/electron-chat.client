@@ -2,16 +2,23 @@ import React, { useEffect, useState } from "react"
 import SpeedDials from "../../common/SpeedDials"
 import ExitToAppIcon from "@material-ui/icons/ExitToApp"
 import AddCommentOutlinedIcon from "@material-ui/icons/AddCommentOutlined"
+import MeetingRoomIcon from "@material-ui/icons/MeetingRoom"
 import { useHistory } from "react-router-dom"
 import { createNewWindow } from "../../../util"
 import { useDispatch, useSelector, useStore } from "react-redux"
 import { fetchChattingRoomList } from "../../../actions/mainAction"
 import AddChattingRoomModal from "./AddChattingRoomModal"
+import ParticipateRoomModal from "./ParticipateRoomModal"
 
 const ChatTab = () => {
     const history = useHistory()
-    const modlaVisibleState = useState("")
-    const [visible, setVisible] = modlaVisibleState
+    const addModlaVisibleState = useState(false)
+    const [addVisible, setAddVisible] = addModlaVisibleState
+    const participateModlaVisibleState = useState(false)
+    const [
+        participateVisible,
+        setParticipateVisible,
+    ] = participateModlaVisibleState
     const keywordState = useState("")
     const [keyword] = keywordState
     if (history.action === "POP") {
@@ -22,7 +29,12 @@ const ChatTab = () => {
         {
             icon: <AddCommentOutlinedIcon />,
             name: "채팅방 생성",
-            onClick: () => setVisible(!visible),
+            onClick: () => setAddVisible(!addVisible),
+        },
+        {
+            icon: <MeetingRoomIcon />,
+            name: "채팅방 입장",
+            onClick: () => setParticipateVisible(!participateVisible),
         },
         {
             icon: <ExitToAppIcon />,
@@ -38,8 +50,11 @@ const ChatTab = () => {
         <>
             <Search keywordState={keywordState} />
             <div className="main_contents">
-                <ChattingRoomWrap keyword={keyword} visible={visible} />
-                <AddChattingRoomModal visibleState={modlaVisibleState} />
+                <ChattingRoomWrap keyword={keyword} visible={addVisible} />
+                <AddChattingRoomModal visibleState={addModlaVisibleState} />
+                <ParticipateRoomModal
+                    visibleState={participateModlaVisibleState}
+                />
             </div>
             <SpeedDials actions={actions} />
         </>
@@ -77,6 +92,7 @@ const ChattingRoomWrap = (props) => {
     const { user } = useStore().getState()
     const { info } = user
     const chattingRoomList = useSelector((store) => store.chatting.rooms)
+    const isApp = window.require
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(fetchChattingRoomList())
@@ -88,14 +104,24 @@ const ChattingRoomWrap = (props) => {
         }
         if (!keyword) {
             return chattingRoomList.map((el) => (
-                <ChattingRoom key={el.idx} userName={info.name} {...el} />
+                <ChattingRoom
+                    key={el.idx}
+                    isApp={isApp}
+                    userName={info.name}
+                    {...el}
+                />
             ))
         }
         const regExp = new RegExp(keyword)
         return chattingRoomList
             .filter((room) => room.name.match(regExp))
             .map((el) => (
-                <ChattingRoom key={el.idx} userName={info.name} {...el} />
+                <ChattingRoom
+                    key={el.idx}
+                    isApp={isApp}
+                    userName={info.name}
+                    {...el}
+                />
             ))
     }
     return (
@@ -108,17 +134,20 @@ const ChattingRoomWrap = (props) => {
 }
 
 const ChattingRoom = (props) => {
-    const { idx, name, userName, participants } = props
+    const { idx, name, userName, isApp, participants } = props
     const isPersonal = props.is_personal === "Y" ? true : false
     const history = useHistory()
     const openChat = (e) => {
         e.stopPropagation()
-        history.push(
-            `/chatting/${idx}?roomName=${name}&userName=${userName}&isPersonal=${isPersonal}`
-        )
-        //const queryString = `?roomName=${name}&userName=${userName}&isPersonal=${isPersonal}`
-        // const url = `http://localhost:3030/#/chatting/${idx+queryString}`
-        // createNewWindow(url)
+        if (!isApp) {
+            history.push(
+                `/chatting/${idx}?roomName=${name}&userName=${userName}&isPersonal=${isPersonal}`
+            )
+            return
+        }
+        const queryString = `?roomName=${name}&userName=${userName}&isPersonal=${isPersonal}`
+        const url = `http://localhost:3030/#/chatting/${idx + queryString}`
+        createNewWindow(url)
     }
     const parseName = () => {
         if (!name.includes("$")) {
