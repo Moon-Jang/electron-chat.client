@@ -1,6 +1,7 @@
 # Electron-chat
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+electron-chat은 electron 을 이용한 채팅 애플리케이션으로 여러 사용자와 대화할 수 있는 채팅방과 1:1 개인 채팅방으로 구분지어 지며
+친구 초대 및 친구 추가 기능을 지원합니다.
 
 ## Available Scripts
 
